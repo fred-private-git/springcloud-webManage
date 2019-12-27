@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: com.zkml:ms_qiniu_support:1.0-SNAPSHOT">
+    <CLASSES>
+      <root url="jar://F:/apache-maven-3.3.9-bin/local  repository/com/zkml/ms_qiniu_support/1.0-SNAPSHOT/ms_qiniu_support-1.0-20190423.092511-1.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://F:/apache-maven-3.3.9-bin/local  repository/com/zkml/ms_qiniu_support/1.0-SNAPSHOT/ms_qiniu_support-1.0-20190423.092511-1-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://F:/apache-maven-3.3.9-bin/local  repository/com/zkml/ms_qiniu_support/1.0-SNAPSHOT/ms_qiniu_support-1.0-20190423.092511-1-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

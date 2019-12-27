@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zkml.official_reception.server.dao.HotelRoomDAO">
+ 	<resultMap id="RoomResultMap" type="com.zkml.official_reception.server.po.HotelRoomPO">
+		<result column="room_hotel_room_info_id" property="hotelRoomInfoId" jdbcType="VARCHAR" />
+		<result column="room_hotel_info_id" property="hotelInfoId" jdbcType="VARCHAR" />
+		<result column="room_hotel_room_describe" property="hotelRoomDescribe" jdbcType="VARCHAR" />
+		<result column="room_hotel_room_type" property="hotelRoomType" jdbcType="CHAR" />
+		<result column="room_hotel_room_price" property="hotelRoomPrice" jdbcType="VARCHAR" />
+		<result column="room_hotel_room_equip" property="hotelRoomEquip" jdbcType="VARCHAR" />
+		<result column="room_hotel_room_count" property="hotelRoomCount" jdbcType="INTEGER" />
+		<result column="room_hotel_room_type_describe" property="hotelRoomTypeDescribe" jdbcType="VARCHAR" />
+		<result column="room_attach_img" property="attachImg" jdbcType="VARCHAR" />
+		<result column="room_date_created" property="dateCreated" jdbcType="TIMESTAMP" />
+		<result column="room_last_updated" property="lastUpdated" jdbcType="VARCHAR" />
+		<result column="room_logic_delete" property="logicDelete" jdbcType="CHAR" />
+	</resultMap>
+	<sql id="selectRoomColumnAlias">
+		room.hotel_room_info_id as room_hotel_room_info_id,
+		room.hotel_info_id as room_hotel_info_id,
+		room.hotel_room_describe as room_hotel_room_describe,
+		room.hotel_room_type as room_hotel_room_type,
+		room.hotel_room_price as room_hotel_room_price,
+		room.hotel_room_equip as room_hotel_room_equip,
+		room.hotel_room_count as room_hotel_room_count,
+		room.hotel_room_type_describe as room_hotel_room_type_describe,
+		room.attach_img as room_attach_img,
+		room.date_created as room_date_created,
+		room.last_updated as room_last_updated,
+		room.logic_delete as room_logic_delete
+	</sql>
+	<insert id="" >
+        insert into `hotel_room` (hotel_room_info_id,hotel_info_id,hotel_room_describe,hotel_room_type,hotel_room_price,hotel_room_equip,hotel_room_count,hotel_room_type_describe,attach_img,date_created,last_updated,logic_delete,)
+        <foreach collection="carBasePOList" item="item" separator=",">
+			(
+						#{item.hotelRoomInfoId,jdbcType=VARCHAR},
+						#{item.hotelInfoId,jdbcType=VARCHAR},
+						#{item.hotelRoomDescribe,jdbcType=VARCHAR},
+						#{item.hotelRoomType,jdbcType=CHAR},
+						#{item.hotelRoomPrice,jdbcType=DECIMAL},
+						#{item.hotelRoomEquip,jdbcType=VARCHAR},
+						#{item.hotelRoomCount,jdbcType=INTEGER},
+						#{item.hotelRoomTypeDescribe,jdbcType=VARCHAR},
+						#{item.attachImg,jdbcType=VARCHAR},
+						CURRENT_TIMESTAMP,
+						CURRENT_TIMESTAMP,
+						#{item.logicDelete,jdbcType=CHAR},
+			)
+		</foreach>
+	</insert>
+ 	<insert id="create" parameterType="com.zkml.official_reception.server.po.HotelRoomPO">
+        insert into `hotel_room`
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="hotelRoomInfoId != null">hotel_room_info_id,</if>
+			<if test="hotelInfoId != null">hotel_info_id,</if>
+			<if test="hotelRoomDescribe != null">hotel_room_describe,</if>
+			<if test="hotelRoomType != null">hotel_room_type,</if>
+			<if test="hotelRoomPrice != null">hotel_room_price,</if>
+			<if test="hotelRoomEquip != null">hotel_room_equip,</if>
+			<if test="hotelRoomCount != null">hotel_room_count,</if>
+			<if test="hotelRoomTypeDescribe != null">hotel_room_type_describe,</if>
+			<if test="attachImg != null">attach_img,</if>
+			date_created,
+			last_updated,
+			<if test="logicDelete != null">logic_delete,</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="hotelRoomInfoId!= null">#{hotelRoomInfoId,jdbcType=VARCHAR},</if>
+			<if test="hotelInfoId!= null">#{hotelInfoId,jdbcType=VARCHAR},</if>
+			<if test="hotelRoomDescribe!= null">#{hotelRoomDescribe,jdbcType=VARCHAR},</if>
+			<if test="hotelRoomType!= null">#{hotelRoomType,jdbcType=CHAR},</if>
+			<if test="hotelRoomPrice!= null">#{hotelRoomPrice,jdbcType=DECIMAL},</if>
+			<if test="hotelRoomEquip!= null">#{hotelRoomEquip,jdbcType=VARCHAR},</if>
+			<if test="hotelRoomCount!= null">#{hotelRoomCount,jdbcType=INTEGER},</if>
+			<if test="hotelRoomTypeDescribe!= null">#{hotelRoomTypeDescribe,jdbcType=VARCHAR},</if>
+			<if test="attachImg!= null">#{attachImg,jdbcType=VARCHAR},</if>
+			CURRENT_TIMESTAMP,
+			CURRENT_TIMESTAMP,
+			<if test="logicDelete!= null">#{logicDelete,jdbcType=CHAR},</if>
+		</trim>
+	</insert>
+
+	<update id="update" parameterType="com.zkml.official_reception.server.po.HotelRoomPO">
+		update `hotel_room`
+		<set>
+            <if test="hotelRoomInfoId!= null">hotel_room_info_id=#{hotelRoomInfoId,jdbcType=VARCHAR},</if>
+            <if test="hotelInfoId!= null">hotel_info_id=#{hotelInfoId,jdbcType=VARCHAR},</if>
+            <if test="hotelRoomDescribe!= null">hotel_room_describe=#{hotelRoomDescribe,jdbcType=VARCHAR},</if>
+            <if test="hotelRoomType!= null">hotel_room_type=#{hotelRoomType,jdbcType=CHAR},</if>
+            <if test="hotelRoomPrice!= null">hotel_room_price=#{hotelRoomPrice,jdbcType=DECIMAL},</if>
+            <if test="hotelRoomEquip!= null">hotel_room_equip=#{hotelRoomEquip,jdbcType=VARCHAR},</if>
+            <if test="hotelRoomCount!= null">hotel_room_count=#{hotelRoomCount,jdbcType=INTEGER},</if>
+            <if test="hotelRoomTypeDescribe!= null">hotel_room_type_describe=#{hotelRoomTypeDescribe,jdbcType=VARCHAR},</if>
+            <if test="attachImg!= null">attach_img=#{attachImg,jdbcType=VARCHAR},</if>
+			last_updated=CURRENT_TIMESTAMP,
+            <if test="logicDelete!= null">logic_delete=#{logicDelete,jdbcType=CHAR},</if>
+		</set>
+		where hotel_room_info_id = #{hotelRoomInfoId,jdbcType=CHAR}
+	</update>
+    <update id="update4Null" parameterType="com.zkml.official_reception.server.po.HotelRoomPO">
+        update `hotel_room`
+        <set>
+			hotel_room_info_id=#{hotelRoomInfoId,jdbcType=VARCHAR},
+			hotel_info_id=#{hotelInfoId,jdbcType=VARCHAR},
+			hotel_room_describe=#{hotelRoomDescribe,jdbcType=VARCHAR},
+			hotel_room_type=#{hotelRoomType,jdbcType=CHAR},
+			hotel_room_price=#{hotelRoomPrice,jdbcType=DECIMAL},
+			hotel_room_equip=#{hotelRoomEquip,jdbcType=VARCHAR},
+			hotel_room_count=#{hotelRoomCount,jdbcType=INTEGER},
+			hotel_room_type_describe=#{hotelRoomTypeDescribe,jdbcType=VARCHAR},
+			attach_img=#{attachImg,jdbcType=VARCHAR},
+			last_updated=CURRENT_TIMESTAMP,
+			logic_delete=#{logicDelete,jdbcType=CHAR},
+        </set>
+        where hotel_room_info_id =#{hotelRoomInfoId,jdbcType=CHAR}
+    </update>
+
+	<update id="delete" >
+		<bind name="logicDelete" value="@com.zkml.common.zkmlenum.BooleanEnum@YES" />
+		update  `hotel_room` set logic_delete=#{logicDelete} where hotel_room_info_id = #{hotelRoomInfoId,jdbcType=CHAR}
+	</update>
+
+	<select id="findByHotelRoomInfoId" resultMap="RoomResultMap">
+		<bind name="logicDelete" value="@com.zkml.common.zkmlenum.BooleanEnum@NO" />
+		select
+        <include refid="selectRoomColumnAlias" />
+		from   `hotel_room` room where hotel_room_info_id = #{hotelRoomInfoId,jdbcType=CHAR} and logic_delete=#{logicDelete}
+	</select>
+
+	<select id="findByHotelInfoId" resultMap="RoomResultMap">
+		select
+		<include refid="selectRoomColumnAlias" />
+		from   `hotel_room` room where hotel_info_id = #{hotelInfoId,jdbcType=CHAR}
+	</select>
+
+</mapper>

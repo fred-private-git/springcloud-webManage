@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: com.zkml:ms_common_obj:0.0.1-SNAPSHOT">
+    <CLASSES>
+      <root url="jar://F:/apache-maven-3.3.9-bin/local  repository/com/zkml/ms_common_obj/0.0.1-SNAPSHOT/ms_common_obj-0.0.1-20190717.020348-5.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://F:/apache-maven-3.3.9-bin/local  repository/com/zkml/ms_common_obj/0.0.1-SNAPSHOT/ms_common_obj-0.0.1-20190717.020348-5-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://F:/apache-maven-3.3.9-bin/local  repository/com/zkml/ms_common_obj/0.0.1-SNAPSHOT/ms_common_obj-0.0.1-20190717.020348-5-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

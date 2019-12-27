@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zkml.official_reception.server.dao.ColumnGeographyDAO">
+ 	<resultMap id="GeographyResultMap" type="com.zkml.official_reception.server.po.ColumnGeographyPO">
+		<result column="geography_geography_id" property="geographyId" jdbcType="VARCHAR" />
+		<result column="geography_geography_name" property="geographyName" jdbcType="VARCHAR" />
+		<result column="geography_belong_column_id" property="belongColumnId" jdbcType="VARCHAR" />
+		<result column="geography_geography_level" property="geographyLevel" jdbcType="VARCHAR" />
+		<result column="geography_geography_detail" property="geographyDetail" jdbcType="VARCHAR" />
+		<result column="geography_geography_img" property="geographyImg" jdbcType="VARCHAR" />
+		<result column="geography_date_created" property="dateCreated" jdbcType="TIMESTAMP" />
+		<result column="geography_last_updated" property="lastUpdated" jdbcType="TIMESTAMP" />
+		<result column="geography_logic_delete" property="logicDelete" jdbcType="CHAR" />
+	</resultMap>
+	<sql id="selectGeographyColumnAlias">
+		geography.geography_id as geography_geography_id,
+		geography.geography_name as geography_geography_name,
+		geography.belong_column_id as geography_belong_column_id,
+		geography.geography_level as geography_geography_level,
+		geography.geography_detail as geography_geography_detail,
+		geography.geography_img as geography_geography_img,
+		geography.date_created as geography_date_created,
+		geography.last_updated as geography_last_updated,
+		geography.logic_delete as geography_logic_delete
+	</sql>
+	<insert id="" >
+        insert into `column_geography` (geography_id,geography_name,belong_column_id,geography_level,geography_detail,geography_img,date_created,last_updated,logic_delete,)
+        <foreach collection="carBasePOList" item="item" separator=",">
+			(
+						#{item.geographyId,jdbcType=VARCHAR},
+						#{item.geographyName,jdbcType=VARCHAR},
+						#{item.belongColumnId,jdbcType=VARCHAR},
+						#{item.geographyLevel,jdbcType=VARCHAR},
+						#{item.geographyDetail,jdbcType=VARCHAR},
+						#{item.geographyImg,jdbcType=VARCHAR},
+						CURRENT_TIMESTAMP,
+						CURRENT_TIMESTAMP,
+						#{item.logicDelete,jdbcType=CHAR},
+			)
+		</foreach>
+	</insert>
+ 	<insert id="createGeography" parameterType="com.zkml.official_reception.server.po.ColumnGeographyPO">
+        insert into `column_geography`
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="geographyId != null">geography_id,</if>
+			<if test="geographyName != null">geography_name,</if>
+			<if test="belongColumnId != null">belong_column_id,</if>
+			<if test="geographyLevel != null">geography_level,</if>
+			<if test="geographyDetail != null">geography_detail,</if>
+			<if test="geographyImg != null">geography_img,</if>
+			date_created,
+			last_updated,
+			<if test="logicDelete != null">logic_delete,</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="geographyId!= null">#{geographyId,jdbcType=VARCHAR},</if>
+			<if test="geographyName!= null">#{geographyName,jdbcType=VARCHAR},</if>
+			<if test="belongColumnId!= null">#{belongColumnId,jdbcType=VARCHAR},</if>
+			<if test="geographyLevel!= null">#{geographyLevel,jdbcType=VARCHAR},</if>
+			<if test="geographyDetail!= null">#{geographyDetail,jdbcType=VARCHAR},</if>
+			<if test="geographyImg!= null">#{geographyImg,jdbcType=VARCHAR},</if>
+			CURRENT_TIMESTAMP,
+			CURRENT_TIMESTAMP,
+			<if test="logicDelete!= null">#{logicDelete,jdbcType=CHAR},</if>
+		</trim>
+	</insert>
+
+	<update id="updateGeographyById" parameterType="com.zkml.official_reception.server.po.ColumnGeographyPO">
+		update `column_geography`
+		<set>
+            <if test="geographyId!= null">geography_id=#{geographyId,jdbcType=VARCHAR},</if>
+            <if test="geographyName!= null">geography_name=#{geographyName,jdbcType=VARCHAR},</if>
+            <if test="belongColumnId!= null">belong_column_id=#{belongColumnId,jdbcType=VARCHAR},</if>
+            <if test="geographyLevel!= null">geography_level=#{geographyLevel,jdbcType=VARCHAR},</if>
+            <if test="geographyDetail!= null">geography_detail=#{geographyDetail,jdbcType=VARCHAR},</if>
+            <if test="geographyImg!= null">geography_img=#{geographyImg,jdbcType=VARCHAR},</if>
+			last_updated=CURRENT_TIMESTAMP,
+            <if test="logicDelete!= null">logic_delete=#{logicDelete,jdbcType=CHAR},</if>
+		</set>
+		where geography_id = #{geographyId,jdbcType=CHAR}
+	</update>
+    <update id="update4Null" parameterType="com.zkml.official_reception.server.po.ColumnGeographyPO">
+        update `column_geography`
+        <set>
+			geography_id=#{geographyId,jdbcType=VARCHAR},
+			geography_name=#{geographyName,jdbcType=VARCHAR},
+			belong_column_id=#{belongColumnId,jdbcType=VARCHAR},
+			geography_level=#{geographyLevel,jdbcType=VARCHAR},
+			geography_detail=#{geographyDetail,jdbcType=VARCHAR},
+			geography_img=#{geographyImg,jdbcType=VARCHAR},
+			last_updated=CURRENT_TIMESTAMP,
+			logic_delete=#{logicDelete,jdbcType=CHAR},
+        </set>
+        where geography_id =#{geographyId,jdbcType=CHAR}
+    </update>
+
+	<update id="deleteGeographyById" >
+		<bind name="logicDelete" value="@com.zkml.common.obj.enums.BooleanEnum@YES" />
+		update  `column_geography` set logic_delete=#{logicDelete} where geography_id = #{geographyId,jdbcType=CHAR}
+	</update>
+
+	<select id="findByColumnGeographyId" resultMap="GeographyResultMap">
+		<bind name="logicDelete" value="@com.zkml.common.obj.enums.BooleanEnum@NO" />
+		select
+        <include refid="selectGeographyColumnAlias" />
+		from   `column_geography` geography where geography_id = #{geographyId,jdbcType=CHAR} and logic_delete=#{logicDelete}
+	</select>
+
+	<select id="findWithPage"  resultMap="GeographyResultMap">
+		<bind name="logicDelete" value="@com.zkml.common.obj.enums.BooleanEnum@NO" />
+		SELECT
+		<include refid="selectGeographyColumnAlias" />
+		FROM `column_geography` geography
+		<where>
+			geography.logic_delete = #{logicDelete}
+			<if test="receptionQuery.name != null and receptionQuery.name != ''">
+				and  LOCATE(#{receptionQuery.name},geography.geography_name) > 0
+			</if>
+			<if test="receptionQuery.areaId != null and receptionQuery.areaId != ''">
+				and  geography.area_id=#{receptionQuery.areaId,jdbcType=VARCHAR}
+			</if>
+			and geography.belong_column_id=#{receptionQuery.id,jdbcType=VARCHAR}
+		</where>
+		order by geography.date_created desc
+		limit #{offset},#{max}
+	</select>
+
+	<select id="findCountWithPage" resultType="Long">
+		<bind name="logicDelete" value="@com.zkml.common.obj.enums.BooleanEnum@NO" />
+		SELECT count(*)
+		FROM `column_geography`
+		<where>
+			logic_delete = #{logicDelete}
+			<if test="receptionQuery.name != null and receptionQuery.name != ''">
+				and  LOCATE(#{receptionQuery.name},hotel_name) > 0
+			</if>
+			<if test="receptionQuery.areaId != null and receptionQuery.areaId != ''">
+				and  area_id=#{receptionQuery.areaId}
+			</if>
+			and belong_column_id=#{receptionQuery.id,jdbcType=VARCHAR}
+		</where>
+	</select>
+
+</mapper>

@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zkml.official_reception.server.dao.TitleDAO">
+ 	<resultMap id="ResultMap" type="com.zkml.official_reception.server.po.TitlePO">
+		<result column="title_id" property="titleId" jdbcType="VARCHAR" />
+		<result column="title_name" property="titleName" jdbcType="VARCHAR" />
+		<result column="title_introduction" property="titleIntroduction" jdbcType="VARCHAR" />
+		<result column="upload_image" property="uploadImage" jdbcType="VARCHAR" />
+		<result column="attach_img" property="attachImg" jdbcType="VARCHAR" />
+		<result column="area_id" property="areaId" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="selectColumnAlias">
+		title_id as title_id,
+		title_name as title_name,
+		title_introduction as title_introduction,
+		upload_image as upload_image,
+		attach_img as attach_img,
+		area_id as area_id
+	</sql>
+	<insert id="" >
+        insert into `title` (title_id,title_name,title_introduction,upload_image,attach_img,area_id,)
+        <foreach collection="carBasePOList" item="item" separator=",">
+			(
+						#{item.titleId,jdbcType=VARCHAR},
+						#{item.titleName,jdbcType=VARCHAR},
+						#{item.titleIntroduction,jdbcType=VARCHAR},
+						#{item.uploadImage,jdbcType=VARCHAR},
+						#{item.attachImg,jdbcType=VARCHAR},
+						#{item.areaId,jdbcType=VARCHAR},
+			)
+		</foreach>
+	</insert>
+ 	<insert id="create" parameterType="com.zkml.official_reception.server.po.TitlePO">
+        insert into `title`
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="titleId != null">title_id,</if>
+			<if test="titleName != null">title_name,</if>
+			<if test="titleIntroduction != null">title_introduction,</if>
+			<if test="uploadImage != null">upload_image,</if>
+			<if test="attachImg != null">attach_img,</if>
+			<if test="areaId != null">area_id,</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="titleId!= null">#{titleId,jdbcType=VARCHAR},</if>
+			<if test="titleName!= null">#{titleName,jdbcType=VARCHAR},</if>
+			<if test="titleIntroduction!= null">#{titleIntroduction,jdbcType=VARCHAR},</if>
+			<if test="uploadImage!= null">#{uploadImage,jdbcType=VARCHAR},</if>
+			<if test="attachImg!= null">#{attachImg,jdbcType=VARCHAR},</if>
+			<if test="areaId!= null">#{areaId,jdbcType=VARCHAR},</if>
+		</trim>
+	</insert>
+
+	<update id="updateTitle" parameterType="com.zkml.official_reception.server.po.TitlePO">
+		update `title`
+		<set>
+            <if test="titleName!= null">title_name=#{titleName,jdbcType=VARCHAR},</if>
+            <if test="titleIntroduction!= null">title_introduction=#{titleIntroduction,jdbcType=VARCHAR},</if>
+            <if test="uploadImage!= null">upload_image=#{uploadImage,jdbcType=VARCHAR},</if>
+            <if test="attachImg!= null">attach_img=#{attachImg,jdbcType=VARCHAR},</if>
+            <if test="areaId!= null">area_id=#{areaId,jdbcType=VARCHAR},</if>
+		</set>
+		where title_id = #{titleId,jdbcType=VARCHAR}
+	</update>
+    <update id="update4Null" parameterType="com.zkml.official_reception.server.po.TitlePO">
+        update `title`
+        <set>
+			title_id=#{titleId,jdbcType=VARCHAR},
+			title_name=#{titleName,jdbcType=VARCHAR},
+			title_introduction=#{titleIntroduction,jdbcType=VARCHAR},
+			upload_image=#{uploadImage,jdbcType=VARCHAR},
+			attach_img=#{attachImg,jdbcType=VARCHAR},
+			area_id=#{areaId,jdbcType=VARCHAR},
+        </set>
+        where title_id =#{titleId,jdbcType=CHAR}
+    </update>
+
+	<delete id="delete" >
+		delete from  `title` where title_id = #{titleId,jdbcType=VARCHAR}
+	</delete>
+
+	<select id="findByTitleId" resultMap="ResultMap">
+		select
+        <include refid="selectColumnAlias" />
+		from   `title`   where title_id = #{titleId,jdbcType=VARCHAR}
+	</select>
+
+	<select id="findAll" resultMap="ResultMap">
+		select
+		<include refid="selectColumnAlias" />
+		from   `title`
+	</select>
+</mapper>

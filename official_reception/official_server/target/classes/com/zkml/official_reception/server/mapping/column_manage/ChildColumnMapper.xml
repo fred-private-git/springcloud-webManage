@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zkml.official_reception.server.dao.ChildColumnDAO">
+ 	<resultMap id="ChildColumnResultMap" type="com.zkml.official_reception.server.po.ChildColumnPO">
+		<result column="child_column_id" property="childColumnId" jdbcType="VARCHAR" />
+		<result column="child_column_name" property="childColumnName" jdbcType="VARCHAR" />
+		<result column="belong_column_id" property="belongColumnId" jdbcType="VARCHAR" />
+		<result column="date_created" property="dateCreated" jdbcType="TIMESTAMP" />
+		<result column="last_updated" property="lastUpdated" jdbcType="TIMESTAMP" />
+		<result column="logic_delete" property="logicDelete" jdbcType="CHAR" />
+	</resultMap>
+
+
+	<sql id="selectColumnColumnAlias">
+		child_column_id as child_column_id,
+		child_column_name as child_column_name,
+		belong_column_id as belong_column_id,
+		date_created as date_created,
+		last_updated as last_updated,
+		logic_delete as logic_delete
+	</sql>
+	<sql id="selectColumnAlias">
+		column_id as column_id,
+		column_name as column_name,
+		belong_title_id as belong_title_id,
+		status as status,
+		icon as icon,
+		mark as mark,
+		date_created as date_created,
+		last_updated as last_updated,
+		logic_detele as logic_detele
+	</sql>
+	<insert id="" >
+        insert into `child_column` (child_column_id,child_column_name,belong_column_id,date_created,last_updated,logic_delete,)
+        <foreach collection="carBasePOList" item="item" separator=",">
+			(
+						#{item.childColumnId,jdbcType=VARCHAR},
+						#{item.childColumnName,jdbcType=VARCHAR},
+						#{item.belongColumnId,jdbcType=VARCHAR},
+						CURRENT_TIMESTAMP,
+						CURRENT_TIMESTAMP,
+						#{item.logicDelete,jdbcType=CHAR},
+			)
+		</foreach>
+	</insert>
+ 	<insert id="createChildColumn" parameterType="com.zkml.official_reception.server.po.ChildColumnPO">
+        insert into `child_column`
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="childColumnId != null">child_column_id,</if>
+			<if test="childColumnName != null">child_column_name,</if>
+			<if test="belongColumnId != null">belong_column_id,</if>
+			date_created,
+			last_updated,
+			<if test="logicDelete != null">logic_delete,</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="childColumnId!= null">#{childColumnId,jdbcType=VARCHAR},</if>
+			<if test="childColumnName!= null">#{childColumnName,jdbcType=VARCHAR},</if>
+			<if test="belongColumnId!= null">#{belongColumnId,jdbcType=VARCHAR},</if>
+			CURRENT_TIMESTAMP,
+			CURRENT_TIMESTAMP,
+			<if test="logicDelete!= null">#{logicDelete,jdbcType=CHAR},</if>
+		</trim>
+	</insert>
+
+	<update id="updateChildColumnById" parameterType="com.zkml.official_reception.server.po.ChildColumnPO">
+		update `child_column`
+		<set>
+            <if test="childColumnId!= null">child_column_id=#{childColumnId,jdbcType=VARCHAR},</if>
+            <if test="childColumnName!= null">child_column_name=#{childColumnName,jdbcType=VARCHAR},</if>
+            <if test="belongColumnId!= null">belong_column_id=#{belongColumnId,jdbcType=VARCHAR},</if>
+			last_updated=CURRENT_TIMESTAMP,
+            <if test="logicDelete!= null">logic_delete=#{logicDelete,jdbcType=CHAR},</if>
+		</set>
+		where child_column_id = #{childColumnId,jdbcType=CHAR}
+	</update>
+    <update id="update4Null" parameterType="com.zkml.official_reception.server.po.ChildColumnPO">
+        update `child_column`
+        <set>
+			child_column_id=#{childColumnId,jdbcType=VARCHAR},
+			child_column_name=#{childColumnName,jdbcType=VARCHAR},
+			belong_column_id=#{belongColumnId,jdbcType=VARCHAR},
+			last_updated=CURRENT_TIMESTAMP,
+			logic_delete=#{logicDelete,jdbcType=CHAR},
+        </set>
+        where child_column_id =#{childColumnId,jdbcType=CHAR}
+    </update>
+
+	<update id="deleteChildColumnById" >
+		<bind name="logicDelete" value="@com.zkml.common.obj.enums.BooleanEnum@YES" />
+		update  `child_column` set logic_delete=#{logicDelete} where child_column_id = #{childColumnId,jdbcType=CHAR}
+	</update>
+
+
+
+	<select id="findChildByColumnId" resultMap="ChildColumnResultMap">
+		<bind name="logicDelete" value="@com.zkml.common.obj.enums.BooleanEnum@NO" />
+		select
+		<include refid="selectColumnColumnAlias" />
+		from   `child_column`   where logic_delete=#{logicDelete} AND belong_column_id = #{columnId,jdbcType=VARCHAR}
+	</select>
+
+	<select id="findByChildColumnId" resultMap="ChildColumnResultMap">
+		<bind name="logicDelete" value="@com.zkml.common.obj.enums.BooleanEnum@NO" />
+		select
+		<include refid="selectColumnColumnAlias" />
+		from   `child_column`   where logic_delete=#{logicDelete} AND child_column_id = #{childColumnId,jdbcType=VARCHAR}
+	</select>
+
+</mapper>

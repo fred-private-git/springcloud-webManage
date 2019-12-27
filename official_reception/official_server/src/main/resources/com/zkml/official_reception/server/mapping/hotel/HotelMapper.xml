@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zkml.official_reception.server.dao.HotelDAO">
+ 	<resultMap id="ResultMap" type="com.zkml.official_reception.server.po.HotelPO">
+		<result column="_hotel_info_id" property="hotelInfoId" jdbcType="VARCHAR" />
+		<result column="_hotel_name" property="hotelName" jdbcType="VARCHAR" />
+		<result column="_area_id" property="areaId" jdbcType="VARCHAR" />
+		<result column="_detailed_address" property="detailedAddress" jdbcType="VARCHAR" />
+		<result column="_attach_img" property="attachImg" jdbcType="VARCHAR" />
+		<result column="_brief_introduction" property="briefIntroduction" jdbcType="VARCHAR" />
+		<result column="_site_img_x" property="site_img_x" jdbcType="VARCHAR" />
+		<result column="_site_img_y" property="site_img_y" jdbcType="VARCHAR" />
+		<result column="_vr_img" property="vrImg" jdbcType="VARCHAR" />
+	</resultMap>
+	<resultMap id="ResultQueryMap" type="com.zkml.official_reception.client.query.ReceptionQuery">
+		<result column="area_id" property="areaId" jdbcType="VARCHAR" />
+		<result column="hotel_name" property="hotelName" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="selectColumnAlias">
+		hotel_info_id as _hotel_info_id,
+		hotel_name as _hotel_name,
+		area_id as _area_id,
+		detailed_address as _detailed_address,
+		attach_img as _attach_img,
+		brief_introduction as _brief_introduction,
+		site_img_x as _site_img_x,
+		site_img_y as _site_img_y,
+		vr_img as _vr_img
+	</sql>
+	<insert id="" >
+        insert into `hotel` (hotel_info_id,hotel_name,area_id,detailed_address,attach_img,brief_introduction,site_img,vr_img,)
+        <foreach collection="carBasePOList" item="item" separator=",">
+			(
+						#{item.hotelInfoId,jdbcType=VARCHAR},
+						#{item.hotelName,jdbcType=VARCHAR},
+						#{item.areaId,jdbcType=VARCHAR},
+						#{item.detailedAddress,jdbcType=VARCHAR},
+						#{item.attachImg,jdbcType=VARCHAR},
+						#{item.briefIntroduction,jdbcType=VARCHAR},
+						#{item.siteImg,jdbcType=VARCHAR},
+						#{item.vrImg,jdbcType=VARCHAR},
+			)
+		</foreach>
+	</insert>
+ 	<insert id="create" parameterType="com.zkml.official_reception.server.po.HotelPO">
+        insert into `hotel`
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="hotelInfoId != null">hotel_info_id,</if>
+			<if test="hotelName != null">hotel_name,</if>
+			<if test="areaId != null">area_id,</if>
+			<if test="detailedAddress != null">detailed_address,</if>
+			<if test="attachImg != null">attach_img,</if>
+			<if test="briefIntroduction != null">brief_introduction,</if>
+			<if test="siteImg != null">site_img,</if>
+			<if test="vrImg != null">vr_img,</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="hotelInfoId!= null">#{hotelInfoId,jdbcType=VARCHAR},</if>
+			<if test="hotelName!= null">#{hotelName,jdbcType=VARCHAR},</if>
+			<if test="areaId!= null">#{areaId,jdbcType=VARCHAR},</if>
+			<if test="detailedAddress!= null">#{detailedAddress,jdbcType=VARCHAR},</if>
+			<if test="attachImg!= null">#{attachImg,jdbcType=VARCHAR},</if>
+			<if test="briefIntroduction!= null">#{briefIntroduction,jdbcType=VARCHAR},</if>
+			<if test="siteImg!= null">#{siteImg,jdbcType=VARCHAR},</if>
+			<if test="vrImg!= null">#{vrImg,jdbcType=VARCHAR},</if>
+		</trim>
+	</insert>
+
+	<update id="update" parameterType="com.zkml.official_reception.server.po.HotelPO">
+		update `hotel`
+		<set>
+            <if test="hotelInfoId!= null">hotel_info_id=#{hotelInfoId,jdbcType=VARCHAR},</if>
+            <if test="hotelName!= null">hotel_name=#{hotelName,jdbcType=VARCHAR},</if>
+            <if test="areaId!= null">area_id=#{areaId,jdbcType=VARCHAR},</if>
+            <if test="detailedAddress!= null">detailed_address=#{detailedAddress,jdbcType=VARCHAR},</if>
+            <if test="attachImg!= null">attach_img=#{attachImg,jdbcType=VARCHAR},</if>
+            <if test="briefIntroduction!= null">brief_introduction=#{briefIntroduction,jdbcType=VARCHAR},</if>
+            <if test="siteImg!= null">site_img=#{siteImg,jdbcType=VARCHAR},</if>
+            <if test="vrImg!= null">vr_img=#{vrImg,jdbcType=VARCHAR},</if>
+		</set>
+		where hotel_info_id = #{hotelInfoId,jdbcType=CHAR}
+	</update>
+    <update id="update4Null" parameterType="com.zkml.official_reception.server.po.HotelPO">
+        update `hotel`
+        <set>
+			hotel_info_id=#{hotelInfoId,jdbcType=VARCHAR},
+			hotel_name=#{hotelName,jdbcType=VARCHAR},
+			area_id=#{areaId,jdbcType=VARCHAR},
+			detailed_address=#{detailedAddress,jdbcType=VARCHAR},
+			attach_img=#{attachImg,jdbcType=VARCHAR},
+			brief_introduction=#{briefIntroduction,jdbcType=VARCHAR},
+			site_img=#{siteImg,jdbcType=VARCHAR},
+			vr_img=#{vrImg,jdbcType=VARCHAR},
+        </set>
+        where hotel_info_id =#{hotelInfoId,jdbcType=CHAR}
+    </update>
+
+	<delete id="delete" >
+		delete from  `hotel` where hotel_info_id = #{hotelInfoId,jdbcType=CHAR}
+	</delete>
+
+	<select id="hotelCountByAreaId" resultType="int">
+		SELECT COUNT(*) FROM hotel hotel WHERE area_id
+		in
+		(
+			SELECT area.area_id FROM sys_area area WHERE parent_id = #{areaId,jdbcType=VARCHAR}
+		)
+	</select>
+
+	<select id="findTotalByAreaId" resultType="Map">
+		SELECT count(1) total,tab.area_name  areaName,tab.area_id areaId FROM
+			(SELECT hotel.area_id,area.area_name FROM hotel hotel ,sys_area area  WHERE hotel.area_id=area.area_id and area.parent_id= #{areaId,jdbcType=VARCHAR}) tab
+		GROUP BY tab.area_id
+	</select>
+
+	<select id="findByAreaId" resultType="int">
+		SELECT count(*)
+		FROM hotel WHERE  area_id= #{areaId,jdbcType=VARCHAR}
+	</select>
+
+	<select id="findWithPage"  resultMap="ResultMap">
+		SELECT
+		<include refid="selectColumnAlias" />
+		FROM hotel hotel
+		<where>
+			<if test="receptionQuery.name != null and receptionQuery.name != ''">
+				and  LOCATE(#{receptionQuery.name},hotel.hotel_name) > 0
+			</if>
+			<if test="receptionQuery.areaId != null and receptionQuery.areaId != ''">
+				and  hotel.area_id=#{receptionQuery.areaId}
+			</if>
+		</where>
+		order by hotel.date_created desc
+		limit #{offset},#{max}
+	</select>
+
+	<select id="findWithOutPage"  resultMap="ResultMap">
+		SELECT
+		<include refid="selectColumnAlias" />
+		FROM hotel hotel
+		<where>
+			area_id=#{areaId}
+		</where>
+	</select>
+
+	<select id="findCountWithPage" resultType="int">
+		SELECT count(*)
+		FROM hotel
+		<where>
+			<if test="receptionQuery.name != null and receptionQuery.name != ''">
+				and  LOCATE(#{receptionQuery.name},hotel_name) > 0
+			</if>
+			<if test="receptionQuery.areaId != null and receptionQuery.areaId != ''">
+				and  area_id=#{receptionQuery.areaId}
+			</if>
+		</where>
+	</select>
+
+	<select id="findByHotelInfoId" resultMap="ResultMap">
+		select
+		<include refid="selectColumnAlias" />
+		from   `hotel` hotel where hotel_info_id = #{hotelInfoId,jdbcType=CHAR}
+	</select>
+</mapper>

@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zkml.official_reception.server.dao.ColumnFoodDAO">
+ 	<resultMap id="FoodResultMap" type="com.zkml.official_reception.server.po.ColumnFoodPO">
+		<result column="food_column_food_id" property="columnFoodId" jdbcType="VARCHAR" />
+		<result column="food_column_food_name" property="columnFoodName" jdbcType="VARCHAR" />
+		<result column="food_belong_column_id" property="belongColumnId" jdbcType="VARCHAR" />
+		<result column="food_raw_materia" property="rawMateria" jdbcType="VARCHAR" />
+		<result column="food_brief_introduction" property="briefIntroduction" jdbcType="VARCHAR" />
+		<result column="food_food_make" property="foodMake" jdbcType="VARCHAR" />
+		<result column="food_food_restaurant" property="foodRestaurant" jdbcType="VARCHAR" />
+		<result column="food_attach_img" property="attachImg" jdbcType="VARCHAR" />
+		<result column="food_date_created" property="dateCreated" jdbcType="TIMESTAMP" />
+		<result column="food_last_updated" property="lastUpdated" jdbcType="TIMESTAMP" />
+		<result column="food_logic_delete" property="logicDelete" jdbcType="CHAR" />
+	</resultMap>
+	<sql id="selectFoodColumnAlias">
+		food.column_food_id as food_column_food_id,
+		food.column_food_name as food_column_food_name,
+		food.belong_column_id as food_belong_column_id,
+		food.raw_materia as food_raw_materia,
+		food.brief_introduction as food_brief_introduction,
+		food.food_make as food_food_make,
+		food.food_restaurant as food_food_restaurant,
+		food.attach_img as food_attach_img,
+		food.date_created as food_date_created,
+		food.last_updated as food_last_updated,
+		food.logic_delete as food_logic_delete
+	</sql>
+	<insert id="" >
+        insert into `column_food` (column_food_id,column_food_name,belong_column_id,raw_materia,brief_introduction,food_make,food_restaurant,attach_img,date_created,last_updated,logic_delete,)
+        <foreach collection="carBasePOList" item="item" separator=",">
+			(
+						#{item.columnFoodId,jdbcType=VARCHAR},
+						#{item.columnFoodName,jdbcType=VARCHAR},
+						#{item.belongColumnId,jdbcType=VARCHAR},
+						#{item.rawMateria,jdbcType=VARCHAR},
+						#{item.briefIntroduction,jdbcType=VARCHAR},
+						#{item.foodMake,jdbcType=VARCHAR},
+						#{item.foodRestaurant,jdbcType=VARCHAR},
+						#{item.attachImg,jdbcType=VARCHAR},
+						CURRENT_TIMESTAMP,
+						CURRENT_TIMESTAMP,
+						#{item.logicDelete,jdbcType=CHAR},
+			)
+		</foreach>
+	</insert>
+ 	<insert id="createFood" parameterType="com.zkml.official_reception.server.po.ColumnFoodPO">
+        insert into `column_food`
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="columnFoodId != null">column_food_id,</if>
+			<if test="columnFoodName != null">column_food_name,</if>
+			<if test="belongColumnId != null">belong_column_id,</if>
+			<if test="rawMateria != null">raw_materia,</if>
+			<if test="briefIntroduction != null">brief_introduction,</if>
+			<if test="foodMake != null">food_make,</if>
+			<if test="foodRestaurant != null">food_restaurant,</if>
+			<if test="attachImg != null">attach_img,</if>
+			date_created,
+			last_updated,
+			<if test="logicDelete != null">logic_delete,</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="columnFoodId!= null">#{columnFoodId,jdbcType=VARCHAR},</if>
+			<if test="columnFoodName!= null">#{columnFoodName,jdbcType=VARCHAR},</if>
+			<if test="belongColumnId!= null">#{belongColumnId,jdbcType=VARCHAR},</if>
+			<if test="rawMateria!= null">#{rawMateria,jdbcType=VARCHAR},</if>
+			<if test="briefIntroduction!= null">#{briefIntroduction,jdbcType=VARCHAR},</if>
+			<if test="foodMake!= null">#{foodMake,jdbcType=VARCHAR},</if>
+			<if test="foodRestaurant!= null">#{foodRestaurant,jdbcType=VARCHAR},</if>
+			<if test="attachImg!= null">#{attachImg,jdbcType=VARCHAR},</if>
+			CURRENT_TIMESTAMP,
+			CURRENT_TIMESTAMP,
+			<if test="logicDelete!= null">#{logicDelete,jdbcType=CHAR},</if>
+		</trim>
+	</insert>
+
+	<update id="updateFoodById" parameterType="com.zkml.official_reception.server.po.ColumnFoodPO">
+		update `column_food`
+		<set>
+            <if test="columnFoodId!= null">column_food_id=#{columnFoodId,jdbcType=VARCHAR},</if>
+            <if test="columnFoodName!= null">column_food_name=#{columnFoodName,jdbcType=VARCHAR},</if>
+            <if test="belongColumnId!= null">belong_column_id=#{belongColumnId,jdbcType=VARCHAR},</if>
+            <if test="rawMateria!= null">raw_materia=#{rawMateria,jdbcType=VARCHAR},</if>
+            <if test="briefIntroduction!= null">brief_introduction=#{briefIntroduction,jdbcType=VARCHAR},</if>
+            <if test="foodMake!= null">food_make=#{foodMake,jdbcType=VARCHAR},</if>
+            <if test="foodRestaurant!= null">food_restaurant=#{foodRestaurant,jdbcType=VARCHAR},</if>
+            <if test="attachImg!= null">attach_img=#{attachImg,jdbcType=VARCHAR},</if>
+			last_updated=CURRENT_TIMESTAMP,
+            <if test="logicDelete!= null">logic_delete=#{logicDelete,jdbcType=CHAR},</if>
+		</set>
+		where column_food_id = #{columnFoodId,jdbcType=CHAR}
+	</update>
+    <update id="update4Null" parameterType="com.zkml.official_reception.server.po.ColumnFoodPO">
+        update `column_food`
+        <set>
+			column_food_id=#{columnFoodId,jdbcType=VARCHAR},
+			column_food_name=#{columnFoodName,jdbcType=VARCHAR},
+			belong_column_id=#{belongColumnId,jdbcType=VARCHAR},
+			raw_materia=#{rawMateria,jdbcType=VARCHAR},
+			brief_introduction=#{briefIntroduction,jdbcType=VARCHAR},
+			food_make=#{foodMake,jdbcType=VARCHAR},
+			food_restaurant=#{foodRestaurant,jdbcType=VARCHAR},
+			attach_img=#{attachImg,jdbcType=VARCHAR},
+			last_updated=CURRENT_TIMESTAMP,
+			logic_delete=#{logicDelete,jdbcType=CHAR},
+        </set>
+        where column_food_id =#{columnFoodId,jdbcType=CHAR}
+    </update>
+
+	<update id="deleteFoodById" >
+		<bind name="logicDelete" value="@com.zkml.common.obj.enums.BooleanEnum@YES" />
+		update  `column_food` set logic_delete=#{logicDelete} where column_food_id = #{columnFoodId,jdbcType=CHAR}
+	</update>
+
+	<select id="findByColumnFoodId" resultMap="FoodResultMap">
+		<bind name="logicDelete" value="@com.zkml.common.obj.enums.BooleanEnum@NO" />
+		select
+        <include refid="selectFoodColumnAlias" />
+		from   `column_food` food where column_food_id = #{columnFoodId,jdbcType=CHAR} and logic_delete=#{logicDelete}
+	</select>
+
+
+
+	<select id="findWithPage"  resultMap="FoodResultMap">
+		<bind name="logicDelete" value="@com.zkml.common.obj.enums.BooleanEnum@NO" />
+		SELECT
+		<include refid="selectFoodColumnAlias" />
+		FROM `column_food` food
+		<where>
+			food.logic_delete = #{logicDelete}
+			<if test="receptionQuery.name != null and receptionQuery.name != ''">
+				and  LOCATE(#{receptionQuery.name},food.column_food_name) > 0
+			</if>
+			<if test="receptionQuery.areaId != null and receptionQuery.areaId != ''">
+				and  food.area_id=#{receptionQuery.areaId,jdbcType=VARCHAR}
+			</if>
+			and food.belong_column_id=#{receptionQuery.id,jdbcType=VARCHAR}
+		</where>
+		order by food.date_created desc
+		limit #{offset},#{max}
+	</select>
+
+	<select id="findCountWithPage" resultType="Long">
+		<bind name="logicDelete" value="@com.zkml.common.obj.enums.BooleanEnum@NO" />
+		SELECT count(*)
+		FROM `column_food`
+		<where>
+			logic_delete = #{logicDelete}
+			<if test="receptionQuery.name != null and receptionQuery.name != ''">
+				and  LOCATE(#{receptionQuery.name},hotel_name) > 0
+			</if>
+			<if test="receptionQuery.areaId != null and receptionQuery.areaId != ''">
+				and  area_id=#{receptionQuery.areaId}
+			</if>
+			and belong_column_id=#{receptionQuery.id,jdbcType=VARCHAR}
+		</where>
+	</select>
+
+</mapper>

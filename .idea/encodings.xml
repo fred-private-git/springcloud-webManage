@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding">
+    <file url="file://$PROJECT_DIR$" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/official_eureka" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/official_facade" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/official_reception" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/official_reception/official_client" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/official_reception/official_server" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/official_zuul" charset="UTF-8" />
+  </component>
+</project>

@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zkml.official_reception.server.dao.HotelRestaurantDAO">
+ 	<resultMap id="RestaurantResultMap" type="com.zkml.official_reception.server.po.RestaurantPO">
+		<result column="restaurant_hotel_restaurant_info_id" property="hotelRestaurantInfoId" jdbcType="VARCHAR" />
+		<result column="restaurant_hotel_info_id" property="hotelInfoId" jdbcType="VARCHAR" />
+		<result column="restaurant_hotel_restaurant_name" property="hotelRestaurantName" jdbcType="VARCHAR" />
+		<result column="restaurant_hotel_restaurant_people" property="hotelRestaurantPeople" jdbcType="VARCHAR" />
+		<result column="restaurant_hotel_room_describe" property="hotelRoomDescribe" jdbcType="VARCHAR" />
+		<result column="restaurant_hotel_restaurant_equip" property="hotelRestaurantEquip" jdbcType="VARCHAR" />
+		<result column="restaurant_hotel_restaurant_area" property="hotelRestaurantArea" jdbcType="VARCHAR" />
+		<result column="restaurant_attach_img" property="attachImg" jdbcType="VARCHAR" />
+		<result column="restaurant_date_created" property="dateCreated" jdbcType="TIMESTAMP" />
+		<result column="restaurant_last_updated" property="lastUpdated" jdbcType="VARCHAR" />
+		<result column="restaurant_logic_delete" property="logicDelete" jdbcType="CHAR" />
+	</resultMap>
+	<sql id="selectRestaurantColumnAlias">
+		restaurant.hotel_restaurant_info_id as restaurant_hotel_restaurant_info_id,
+		restaurant.hotel_info_id as restaurant_hotel_info_id,
+		restaurant.hotel_restaurant_name as restaurant_hotel_restaurant_name,
+		restaurant.hotel_restaurant_people as restaurant_hotel_restaurant_people,
+		restaurant.hotel_room_describe as restaurant_hotel_room_describe,
+		restaurant.hotel_restaurant_equip as restaurant_hotel_restaurant_equip,
+		restaurant.hotel_restaurant_area as restaurant_hotel_restaurant_area,
+		restaurant.attach_img as restaurant_attach_img,
+		restaurant.date_created as restaurant_date_created,
+		restaurant.last_updated as restaurant_last_updated,
+		restaurant.logic_delete as restaurant_logic_delete
+	</sql>
+	<insert id="" >
+        insert into `hotel_restaurant` (hotel_restaurant_info_id,hotel_info_id,hotel_restaurant_name,hotel_restaurant_people,hotel_room_describe,hotel_restaurant_equip,hotel_restaurant_area,attach_img,date_created,last_updated,logic_delete,)
+        <foreach collection="carBasePOList" item="item" separator=",">
+			(
+						#{item.hotelRestaurantInfoId,jdbcType=VARCHAR},
+						#{item.hotelInfoId,jdbcType=VARCHAR},
+						#{item.hotelRestaurantName,jdbcType=VARCHAR},
+						#{item.hotelRestaurantPeople,jdbcType=VARCHAR},
+						#{item.hotelRoomDescribe,jdbcType=VARCHAR},
+						#{item.hotelRestaurantEquip,jdbcType=VARCHAR},
+						#{item.hotelRestaurantArea,jdbcType=VARCHAR},
+						#{item.attachImg,jdbcType=VARCHAR},
+						CURRENT_TIMESTAMP,
+						CURRENT_TIMESTAMP,
+						#{item.logicDelete,jdbcType=CHAR},
+			)
+		</foreach>
+	</insert>
+ 	<insert id="create" parameterType="com.zkml.official_reception.server.po.RestaurantPO">
+        insert into `hotel_restaurant`
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="hotelRestaurantInfoId != null">hotel_restaurant_info_id,</if>
+			<if test="hotelInfoId != null">hotel_info_id,</if>
+			<if test="hotelRestaurantName != null">hotel_restaurant_name,</if>
+			<if test="hotelRestaurantPeople != null">hotel_restaurant_people,</if>
+			<if test="hotelRoomDescribe != null">hotel_room_describe,</if>
+			<if test="hotelRestaurantEquip != null">hotel_restaurant_equip,</if>
+			<if test="hotelRestaurantArea != null">hotel_restaurant_area,</if>
+			<if test="attachImg != null">attach_img,</if>
+			date_created,
+			last_updated,
+			<if test="logicDelete != null">logic_delete,</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="hotelRestaurantInfoId!= null">#{hotelRestaurantInfoId,jdbcType=VARCHAR},</if>
+			<if test="hotelInfoId!= null">#{hotelInfoId,jdbcType=VARCHAR},</if>
+			<if test="hotelRestaurantName!= null">#{hotelRestaurantName,jdbcType=VARCHAR},</if>
+			<if test="hotelRestaurantPeople!= null">#{hotelRestaurantPeople,jdbcType=VARCHAR},</if>
+			<if test="hotelRoomDescribe!= null">#{hotelRoomDescribe,jdbcType=VARCHAR},</if>
+			<if test="hotelRestaurantEquip!= null">#{hotelRestaurantEquip,jdbcType=VARCHAR},</if>
+			<if test="hotelRestaurantArea!= null">#{hotelRestaurantArea,jdbcType=VARCHAR},</if>
+			<if test="attachImg!= null">#{attachImg,jdbcType=VARCHAR},</if>
+			CURRENT_TIMESTAMP,
+			CURRENT_TIMESTAMP,
+			<if test="logicDelete!= null">#{logicDelete,jdbcType=CHAR},</if>
+		</trim>
+	</insert>
+
+	<update id="update" parameterType="com.zkml.official_reception.server.po.RestaurantPO">
+		update `hotel_restaurant`
+		<set>
+            <if test="hotelRestaurantInfoId!= null">hotel_restaurant_info_id=#{hotelRestaurantInfoId,jdbcType=VARCHAR},</if>
+            <if test="hotelInfoId!= null">hotel_info_id=#{hotelInfoId,jdbcType=VARCHAR},</if>
+            <if test="hotelRestaurantName!= null">hotel_restaurant_name=#{hotelRestaurantName,jdbcType=VARCHAR},</if>
+            <if test="hotelRestaurantPeople!= null">hotel_restaurant_people=#{hotelRestaurantPeople,jdbcType=VARCHAR},</if>
+            <if test="hotelRoomDescribe!= null">hotel_room_describe=#{hotelRoomDescribe,jdbcType=VARCHAR},</if>
+            <if test="hotelRestaurantEquip!= null">hotel_restaurant_equip=#{hotelRestaurantEquip,jdbcType=VARCHAR},</if>
+            <if test="hotelRestaurantArea!= null">hotel_restaurant_area=#{hotelRestaurantArea,jdbcType=VARCHAR},</if>
+            <if test="attachImg!= null">attach_img=#{attachImg,jdbcType=VARCHAR},</if>
+			last_updated=CURRENT_TIMESTAMP,
+            <if test="logicDelete!= null">logic_delete=#{logicDelete,jdbcType=CHAR},</if>
+		</set>
+		where hotel_restaurant_info_id = #{hotelRestaurantInfoId,jdbcType=CHAR}
+	</update>
+    <update id="update4Null" parameterType="com.zkml.official_reception.server.po.RestaurantPO">
+        update `hotel_restaurant`
+        <set>
+			hotel_restaurant_info_id=#{hotelRestaurantInfoId,jdbcType=VARCHAR},
+			hotel_info_id=#{hotelInfoId,jdbcType=VARCHAR},
+			hotel_restaurant_name=#{hotelRestaurantName,jdbcType=VARCHAR},
+			hotel_restaurant_people=#{hotelRestaurantPeople,jdbcType=VARCHAR},
+			hotel_room_describe=#{hotelRoomDescribe,jdbcType=VARCHAR},
+			hotel_restaurant_equip=#{hotelRestaurantEquip,jdbcType=VARCHAR},
+			hotel_restaurant_area=#{hotelRestaurantArea,jdbcType=VARCHAR},
+			attach_img=#{attachImg,jdbcType=VARCHAR},
+			last_updated=CURRENT_TIMESTAMP,
+			logic_delete=#{logicDelete,jdbcType=CHAR},
+        </set>
+        where hotel_restaurant_info_id =#{hotelRestaurantInfoId,jdbcType=CHAR}
+    </update>
+
+	<update id="delete" >
+		<bind name="logicDelete" value="@com.zkml.common.zkmlenum.BooleanEnum@YES" />
+		update  `hotel_restaurant` set logic_delete=#{logicDelete} where hotel_restaurant_info_id = #{hotelRestaurantInfoId,jdbcType=CHAR}
+	</update>
+
+	<select id="findByHotelRestaurantInfoId" resultMap="RestaurantResultMap">
+		<bind name="logicDelete" value="@com.zkml.common.zkmlenum.BooleanEnum@NO" />
+		select
+        <include refid="selectRestaurantColumnAlias" />
+		from   `hotel_restaurant` restaurant where hotel_restaurant_info_id = #{hotelRestaurantInfoId,jdbcType=CHAR} and logic_delete=#{logicDelete}
+	</select>
+
+	<select id="findByHotelInfoId" resultMap="RestaurantResultMap">
+		select
+		<include refid="selectRestaurantColumnAlias" />
+		from   `hotel_restaurant` restaurant where hotel_info_id = #{hotelInfoId,jdbcType=CHAR}
+	</select>
+
+</mapper>

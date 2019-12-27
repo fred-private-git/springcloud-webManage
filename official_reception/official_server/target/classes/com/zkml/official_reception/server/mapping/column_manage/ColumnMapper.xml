@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zkml.official_reception.server.dao.ColumnDAO">
+ 	<resultMap id="ResultMap" type="com.zkml.official_reception.server.po.ColumnPO">
+		<result column="column_id" property="columnId" jdbcType="VARCHAR" />
+		<result column="column_name" property="columnName" jdbcType="VARCHAR" />
+		<result column="belong_title_id" property="belongTitleId" jdbcType="VARCHAR" />
+		<result column="status" property="status" jdbcType="CHAR" />
+		<result column="icon" property="icon" jdbcType="VARCHAR" />
+		<result column="mark" property="mark" jdbcType="CHAR" />
+		<result column="date_created" property="dateCreated" jdbcType="TIMESTAMP" />
+		<result column="last_updated" property="lastUpdated" jdbcType="TIMESTAMP" />
+		<result column="logic_detele" property="logicDetele" jdbcType="CHAR" />
+	</resultMap>
+	<resultMap id="ResultMapVO" type="com.zkml.official_reception.server.po.ColumnPOVO">
+		<result column="column_id" property="columnId" jdbcType="VARCHAR" />
+		<result column="column_name" property="columnName" jdbcType="VARCHAR" />
+		<result column="belong_title_id" property="belongTitleId" jdbcType="VARCHAR" />
+		<result column="title_name" property="titleName" jdbcType="VARCHAR" />
+		<result column="icon" property="icon" jdbcType="VARCHAR" />
+		<result column="status" property="status" jdbcType="CHAR" />
+		<result column="mark" property="mark" jdbcType="CHAR" />
+		<result column="date_created" property="dateCreated" jdbcType="TIMESTAMP" />
+		<result column="last_updated" property="lastUpdated" jdbcType="TIMESTAMP" />
+		<result column="logic_detele" property="logicDetele" jdbcType="CHAR" />
+	</resultMap>
+	<sql id="selectColumnAlias">
+		column_id as column_id,
+		column_name as column_name,
+		belong_title_id as belong_title_id,
+		status as status,
+		icon as icon,
+		mark as mark,
+		date_created as date_created,
+		last_updated as last_updated,
+		logic_detele as logic_detele
+	</sql>
+	<insert id="" >
+        insert into `column` (column_id,column_name,belong_title_id,status,icon,mark,date_created,last_updated,logic_detele,)
+        <foreach collection="carBasePOList" item="item" separator=",">
+			(
+						#{item.columnId,jdbcType=VARCHAR},
+						#{item.columnName,jdbcType=VARCHAR},
+						#{item.belongTitleId,jdbcType=VARCHAR},
+						#{item.status,jdbcType=CHAR},
+						#{item.icon,jdbcType=VARCHAR},
+						#{item.mark,jdbcType=CHAR},
+						CURRENT_TIMESTAMP,
+						CURRENT_TIMESTAMP,
+						#{item.logicDetele,jdbcType=CHAR},
+			)
+		</foreach>
+	</insert>
+ 	<insert id="create" parameterType="com.zkml.official_reception.server.po.ColumnPO">
+        insert into `column`
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			column_id,
+			<if test="columnName != null and columnName!=''">column_name,</if>
+			<if test="belongTitleId != null and belongTitleId!=''">belong_title_id,</if>
+			<if test="status != null and status!=''">status,</if>
+			<if test="icon != null and icon!=''">icon,</if>
+			<if test="mark != null and mark!=''">mark,</if>
+			date_created,
+			last_updated,
+			<if test="logicDetele != null and logicDetele!=''">logic_detele,</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			UUID(),
+			<if test="columnName!= null and columnName!=''">#{columnName,jdbcType=VARCHAR},</if>
+			<if test="belongTitleId!= null and belongTitleId!=''">#{belongTitleId,jdbcType=VARCHAR},</if>
+			<if test="status!= null and status!=''">#{status,jdbcType=CHAR},</if>
+			<if test="icon!= null and icon!=''">#{icon,jdbcType=VARCHAR},</if>
+			<if test="mark!= null and mark!=''">#{mark,jdbcType=CHAR},</if>
+			CURRENT_TIMESTAMP,
+			CURRENT_TIMESTAMP,
+			<if test="logicDetele!= null and logicDetele!=''">#{logicDetele,jdbcType=CHAR},</if>
+		</trim>
+	</insert>
+
+	<update id="updateColumn" parameterType="com.zkml.official_reception.server.po.ColumnPO">
+		update `column`
+		<set>
+            <if test="columnName!= null and columnName!=''">column_name=#{columnName,jdbcType=VARCHAR},</if>
+            <if test="belongTitleId!= null and belongTitleId!=''">belong_title_id=#{belongTitleId,jdbcType=VARCHAR},</if>
+            <if test="status!= null and status!=''">status=#{status,jdbcType=CHAR},</if>
+            <if test="icon!= null and icon!=''">icon=#{icon,jdbcType=VARCHAR},</if>
+            <if test="mark!= null and mark!=''">mark=#{mark,jdbcType=CHAR},</if>
+			last_updated=CURRENT_TIMESTAMP,
+            <if test="logicDetele!= null and logicDetele!=''">logic_detele=#{logicDetele,jdbcType=CHAR},</if>
+		</set>
+		where column_id = #{columnId,jdbcType=VARCHAR}
+	</update>
+    <update id="update4Null" parameterType="com.zkml.official_reception.server.po.ColumnPO">
+        update `column`
+        <set>
+			column_id=#{columnId,jdbcType=VARCHAR},
+			column_name=#{columnName,jdbcType=VARCHAR},
+			belong_title_id=#{belongTitleId,jdbcType=VARCHAR},
+			status=#{status,jdbcType=CHAR},
+			icon=#{icon,jdbcType=VARCHAR},
+			mark=#{mark,jdbcType=CHAR},
+			last_updated=CURRENT_TIMESTAMP,
+			logic_detele=#{logicDetele,jdbcType=CHAR},
+        </set>
+        where column_id =#{columnId,jdbcType=CHAR}
+    </update>
+
+	<update id="delete" >
+		<bind name="logicDelete" value="@com.zkml.common.obj.enums.BooleanEnum@YES" />
+		update  `column` set logic_delete=#{logicDelete} where column_id = #{columnId,jdbcType=CHAR}
+	</update>
+
+	<select id="findByColumnId" resultMap="ResultMap">
+		<bind name="logicDelete" value="@com.zkml.common.obj.enums.BooleanEnum@NO" />
+		select
+        <include refid="selectColumnAlias" />
+		from   `column`   where column_id = #{columnId,jdbcType=VARCHAR}
+	</select>
+
+	<select id="findByTitleId" resultMap="ResultMapVO">
+		SELECT col.*,title.title_name
+		FROM `column` col
+		LEFT JOIN title title ON title.title_id = col.belong_title_id
+		WHERE col.belong_title_id=#{titleId,jdbcType=VARCHAR} AND  col.logic_detele = 'NO'
+		ORDER BY col.date_created
+	</select>
+</mapper>

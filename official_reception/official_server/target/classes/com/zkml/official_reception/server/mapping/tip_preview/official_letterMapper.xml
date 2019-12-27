@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zkml.official_reception.server.dao.OfficialLetterDAO">
+ 	<resultMap id="LetterResultMap" type="com.zkml.official_reception.server.po.OfficialLetterPO">
+		<result column="letter_official_letter_id" property="officialLetterId" jdbcType="VARCHAR" />
+		<result column="letter_trip_name" property="tripName" jdbcType="VARCHAR" />
+		<result column="letter_apply_user_tel" property="applyUserTel" jdbcType="VARCHAR" />
+		<result column="letter_apply_user_organ" property="applyUserOrgan" jdbcType="VARCHAR" />
+		<result column="letter_apply_user_name" property="applyUserName" jdbcType="VARCHAR" />
+		<result column="letter_official_letter_name" property="officialLetterName" jdbcType="VARCHAR" />
+		<result column="letter_dispatched_oragan_id" property="dispatchedOraganId" jdbcType="VARCHAR" />
+		<result column="letter_date_created" property="dateCreated" jdbcType="TIMESTAMP" />
+		<result column="letter_dispatched_user_tel" property="dispatchedUserTel" jdbcType="VARCHAR" />
+		<result column="letter_dispatched_user_organ" property="dispatchedUserOrgan" jdbcType="VARCHAR" />
+		<result column="letter_dispatched_user_name" property="dispatchedUserName" jdbcType="VARCHAR" />
+		<result column="letter_visiting_contacts_count" property="visitingContactsCount" jdbcType="INTEGER" />
+		<result column="letter_visiting_end_time" property="visitingEndTime" jdbcType="VARCHAR" />
+		<result column="letter_visiting_start_time" property="visitingStartTime" jdbcType="VARCHAR" />
+		<result column="letter_visiting_during" property="visitingDuring" jdbcType="VARCHAR" />
+		<result column="letter_visiting_reason" property="visitingReason" jdbcType="VARCHAR" />
+		<result column="letter_attach" property="attach" jdbcType="VARCHAR" />
+		<result column="logic_delete" property="logicDelete" jdbcType="CHAR" />
+		<result column="letter_last_updated" property="lastUpdated" jdbcType="VARCHAR" />
+		<result column="letter_audit_status" property="auditStatus" jdbcType="VARCHAR" />
+	</resultMap>
+	<resultMap id="VisitUsersResultMap" type="com.zkml.official_reception.server.po.BaseUserPO">
+		<result column="baseUser_user_id" property="userId" jdbcType="VARCHAR" />
+		<result column="baseUser_official_letter_id" property="officialLetterId" jdbcType="VARCHAR" />
+		<result column="baseUser_user_sex" property="userSex" jdbcType="VARCHAR" />
+		<result column="baseUser_user_name" property="userName" jdbcType="TIMESTAMP" />
+		<result column="baseUser_user_job" property="userJob" jdbcType="VARCHAR" />
+		<result column="baseUser_user_tel" property="userTel" jdbcType="TIMESTAMP" />
+		<result column="baseUser_organ_name" property="OrganName" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="selectUserColumnAlias">
+		baseUser.official_letter_id as user_official_letter_id,
+		baseUser.user_id as baseUser_user_id,
+		baseUser.user_sex as baseUser_user_sex,
+		baseUser.user_name as baseUser_user_name,
+		baseUser.user_job as baseUser_user_job,
+		baseUser.user_tel as baseUser_user_tel,
+		baseUser.organ_name as user_organ_name
+	</sql>
+	<sql id="selectLetterColumnAlias">
+		letter.apply_user_organ as leter_apply_user_organ,
+		letter.apply_user_name as leter_apply_user_name,
+		letter.apply_user_tel as leter_apply_user_tel,
+        letter.trip_name as letter_trip_name,
+		letter.official_letter_id as letter_official_letter_id,
+		letter.official_letter_name as letter_official_letter_name,
+		letter.dispatched_oragan_id as letter_dispatched_oragan_id,
+		letter.date_created as letter_date_created,
+		letter.dispatched_user_tel as letter_dispatched_user_tel,
+		letter.dispatched_user_organ as letter_dispatched_user_organ,
+		letter.dispatched_user_name as letter_dispatched_user_name,
+		letter.visiting_contacts_count as letter_visiting_contacts_count,
+		letter.visiting_end_time as letter_visiting_end_time,
+		letter.visiting_start_time as letter_visiting_start_time,
+		letter.visiting_during as letter_visiting_during,
+		letter.visiting_reason as letter_visiting_reason,
+		letter.attach as letter_attach,
+		letter.logic_delete as letter_logic_delete,
+		letter.audit_status as letter_audit_status,
+		letter.last_updated as letter_last_updated
+	</sql>
+	<insert id="batchCreateVisitUser" >
+        insert into `reception_base_user` (user_id,official_letter_id,user_name,user_sex,user_job,user_tel,organ_name)
+		values
+        <foreach collection="visitUserList" item="item" separator=",">
+			(
+						UUID(),
+						#{item.officialLetterId,jdbcType=VARCHAR},
+						#{item.userName,jdbcType=VARCHAR},
+						#{item.userSex,jdbcType=VARCHAR},
+						#{item.userJob,jdbcType=VARCHAR},
+						#{item.userTel,jdbcType=VARCHAR},
+						#{item.organName,jdbcType=VARCHAR}
+			)
+		</foreach>
+	</insert>
+ 	<insert id="create">
+        insert into `official_letter`
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			official_letter_id,
+			trip_name,
+			<if test="officialLetterPO.applyUserTel != null">apply_user_tel,</if>
+			<if test="officialLetterPO.applyUserOrgan != null">apply_user_organ,</if>
+			<if test="officialLetterPO.applyUserName != null">apply_user_name,</if>
+			<if test="officialLetterPO.officialLetterName != null">official_letter_name,</if>
+			<if test="officialLetterPO.dispatchedOraganId != null">dispatched_oragan_id,</if>
+			date_created,
+			<if test="officialLetterPO.dispatchedUserTel != null">dispatched_user_tel,</if>
+			<if test="officialLetterPO.dispatchedUserOrgan != null">dispatched_user_organ,</if>
+			<if test="officialLetterPO.dispatchedUserName != null">dispatched_user_name,</if>
+			<if test="officialLetterPO.visitingContactsCount != null">visiting_contacts_count,</if>
+			<if test="officialLetterPO.visitingEndTime != null">visiting_end_time,</if>
+			<if test="officialLetterPO.visitingStartTime != null">visiting_start_time,</if>
+			<if test="officialLetterPO.visitingDuring != null">visiting_during,</if>
+			<if test="officialLetterPO.visitingReason != null">visiting_reason,</if>
+			<if test="officialLetterPO.attach != null">attach,</if>
+			<if test="officialLetterPO.auditStatus!= null">audit_status,</if>
+			last_updated,
+			<if test="officialLetterPO.logicDelete!= null">logic_delete,</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="officialLetterPO.officialLetterId!= null">#{officialLetterPO.officialLetterId,jdbcType=VARCHAR},</if>
+			#{officialLetterPO.tripName,jdbcType=VARCHAR},
+			<if test="officialLetterPO.applyUserTel!= null">#{officialLetterPO.applyUserTel,jdbcType=VARCHAR},</if>
+			<if test="officialLetterPO.applyUserOrgan!= null">#{officialLetterPO.applyUserOrgan,jdbcType=VARCHAR},</if>
+			<if test="officialLetterPO.applyUserName!= null">#{officialLetterPO.applyUserName,jdbcType=VARCHAR},</if>
+			<if test="officialLetterPO.officialLetterName!= null">#{officialLetterPO.officialLetterName,jdbcType=VARCHAR},</if>
+			<if test="officialLetterPO.dispatchedOraganId!= null">#{officialLetterPO.dispatchedOraganId,jdbcType=VARCHAR},</if>
+			CURRENT_TIMESTAMP,
+			<if test="officialLetterPO.dispatchedUserTel!= null">#{officialLetterPO.dispatchedUserTel,jdbcType=VARCHAR},</if>
+			<if test="officialLetterPO.dispatchedUserOrgan!= null">#{officialLetterPO.dispatchedUserOrgan,jdbcType=VARCHAR},</if>
+			<if test="officialLetterPO.dispatchedUserName!= null">#{officialLetterPO.dispatchedUserName,jdbcType=VARCHAR},</if>
+			<if test="officialLetterPO.visitingContactsCount!= null">#{officialLetterPO.visitingContactsCount,jdbcType=INTEGER},</if>
+			<if test="officialLetterPO.visitingEndTime!= null">#{officialLetterPO.visitingEndTime,jdbcType=VARCHAR},</if>
+			<if test="officialLetterPO.visitingStartTime!= null">#{officialLetterPO.visitingStartTime,jdbcType=VARCHAR},</if>
+			<if test="officialLetterPO.visitingDuring!= null">#{officialLetterPO.visitingDuring,jdbcType=VARCHAR},</if>
+			<if test="officialLetterPO.visitingReason!= null">#{officialLetterPO.visitingReason,jdbcType=VARCHAR},</if>
+			<if test="officialLetterPO.attach!= null">#{officialLetterPO.attach,jdbcType=VARCHAR},</if>
+			CURRENT_TIMESTAMP,
+			<if test="officialLetterPO.logicDelete!= null">#{officialLetterPO.logicDelete,jdbcType=CHAR},</if>
+			<if test="officialLetterPO.auditStatus!= null">#{officialLetterPO.auditStatus,jdbcType=VARCHAR},</if>
+		</trim>
+	</insert>
+
+	<update id="update">
+		update `official_letter`
+		<set>
+            <if test="officialLetterPO.officialLetterId!= null">official_letter_id=#{officialLetterPO.officialLetterId,jdbcType=VARCHAR},</if>
+			<if test="officialLetterPO.tripName!= null">trip_name=#{officialLetterPO.tripName,jdbcType=VARCHAR},</if>
+			<if test="officialLetterPO.applyUserTel!= null">apply_user_tel=#{officialLetterPO.applyUserTel,jdbcType=VARCHAR},</if>
+			<if test="officialLetterPO.applyUserOrgan!= null">apply_user_organ=#{officialLetterPO.applyUserOrgan,jdbcType=VARCHAR},</if>
+			<if test="officialLetterPO.applyUserName!= null">apply_user_name=#{officialLetterPO.applyUserName,jdbcType=VARCHAR},</if>
+			<if test="officialLetterPO.officialLetterName!= null">official_letter_name=#{officialLetterPO.officialLetterName,jdbcType=VARCHAR},</if>
+            <if test="officialLetterPO.dispatchedOraganId!= null">dispatched_oragan_id=#{officialLetterPO.dispatchedOraganId,jdbcType=VARCHAR},</if>
+            <if test="officialLetterPO.dispatchedUserTel!= null">dispatched_user_tel=#{officialLetterPO.dispatchedUserTel,jdbcType=VARCHAR},</if>
+			<if test="officialLetterPO.dispatchedUserOrgan!= null">dispatched_user_organ=#{officialLetterPO.dispatchedUserOrgan,jdbcType=VARCHAR},</if>
+			<if test="officialLetterPO.dispatchedUserName!= null">dispatched_user_name=#{officialLetterPO.dispatchedUserName,jdbcType=VARCHAR},</if>
+            <if test="officialLetterPO.visitingContactsCount!= null">visiting_contacts_count=#{officialLetterPO.visitingContactsCount,jdbcType=INTEGER},</if>
+			<if test="officialLetterPO.visitingEndTime!= null">visiting_end_time=#{officialLetterPO.visitingEndTime,jdbcType=VARCHAR},</if>
+			<if test="officialLetterPO.visitingStartTime!= null">visiting_start_time=#{officialLetterPO.visitingStartTime,jdbcType=VARCHAR},</if>
+            <if test="officialLetterPO.visitingDuring!= null">visiting_during=#{officialLetterPO.visitingDuring,jdbcType=VARCHAR},</if>
+            <if test="officialLetterPO.visitingReason!= null">visiting_reason=#{officialLetterPO.visitingReason,jdbcType=VARCHAR},</if>
+            <if test="officialLetterPO.attach!= null">attach=#{officialLetterPO.attach,jdbcType=VARCHAR},</if>
+            <if test="officialLetterPO.auditStatus!= null">audit_status=#{officialLetterPO.auditStatus,jdbcType=VARCHAR},</if>
+			last_updated=CURRENT_TIMESTAMP,
+		</set>
+		where official_letter_id = #{officialLetterPO.officialLetterId,jdbcType=VARCHAR}
+	</update>
+	<update id="updateVisitUsers">
+		update `reception_base_user`
+		<set>
+			<if test="baseUserPO.officialLetterId!= null">official_letter_id=#{baseUserPO.officialLetterId,jdbcType=VARCHAR},</if>
+			<if test="baseUserPO.userSex!= null">user_sex=#{baseUserPO.userSex,jdbcType=VARCHAR},</if>
+			<if test="baseUserPO.userName!= null">user_name=#{baseUserPO.userName,jdbcType=VARCHAR},</if>
+			<if test="baseUserPO.userJob!= null">user_job=#{baseUserPO.userJob,jdbcType=VARCHAR},</if>
+			<if test="baseUserPO.userTel!= null">user_tel=#{baseUserPO.userTel,jdbcType=VARCHAR},</if>
+			<if test="baseUserPO.organName!= null">organ_name=#{baseUserPO.organName,jdbcType=VARCHAR},</if>
+		</set>
+		where user_id = #{baseUserPO.userId,jdbcType=VARCHAR}
+	</update>
+    <update id="update4Null" parameterType="com.zkml.official_reception.server.po.OfficialLetterPO">
+        update `official_letter`
+        <set>
+			official_letter_id=#{officialLetterId,jdbcType=VARCHAR},
+			official_letter_name=#{officialLetterName,jdbcType=VARCHAR},
+			apply_user_tel=#{applyUserTel,jdbcType=VARCHAR},
+			apply_user_organ=#{applyUserOrgan,jdbcType=VARCHAR},
+			apply_user_name=#{applyUserName,jdbcType=VARCHAR},
+			dispatched_oragan_id=#{dispatchedOraganId,jdbcType=VARCHAR},
+			dispatched_user_tel=#{dispatchedUserTel,jdbcType=VARCHAR},
+			dispatched_user_organ=#{dispatchedUserOrgan,jdbcType=VARCHAR},
+			dispatched_user_name=#{dispatchedUserName,jdbcType=VARCHAR},
+			visiting_contacts_count=#{visitingContactsCount,jdbcType=INTEGER},
+			visiting_end_time=#{visitingEndTime,jdbcType=VARCHAR},
+			visiting_start_time=#{visitingStartTime,jdbcType=VARCHAR},
+			visiting_during=#{visitingDuring,jdbcType=VARCHAR},
+			visiting_reason=#{visitingReason,jdbcType=VARCHAR},
+			attach=#{attach,jdbcType=VARCHAR},
+			audit_status=#{auditStatus,jdbcType=VARCHAR},
+			last_updated=CURRENT_TIMESTAMP,
+        </set>
+        where official_letter_id = #{officialLetterId,jdbcType=VARCHAR}
+    </update>
+
+	<update id="delete" >
+		<bind name="logicDelete" value="@com.zkml.common.obj.enums.BooleanEnum@YES" />
+		update  `official_letter` set logic_delete=#{logicDelete} where official_letter_id = #{officialLetterId,jdbcType=VARCHAR}
+	</update>
+
+	<select id="findByOfficialLetterId" resultMap="LetterResultMap">
+		<bind name="logicDelete" value="@com.zkml.common.obj.enums.BooleanEnum@NO" />
+		select
+        <include refid="selectLetterColumnAlias" />
+		from   `official_letter` letter  where logic_delete=#{logicDelete} AND official_letter_id = #{officialLetterId,jdbcType=VARCHAR}
+	</select>
+
+	<select id="findVisitUsersByOfficialLetterId" resultMap="VisitUsersResultMap">
+		select
+		<include refid="selectUserColumnAlias" />
+		from   `reception_base_user` baseUser  where official_letter_id = #{officialLetterId,jdbcType=VARCHAR}
+	</select>
+
+	<select id="findTripWithPage" resultMap="LetterResultMap">
+		<bind name="logicDelete" value="@com.zkml.common.obj.enums.BooleanEnum@NO" />
+		select
+		<include refid="selectLetterColumnAlias" />
+		from   `official_letter` letter
+		<where>
+			AND logic_delete=#{logicDelete}
+			<if test="receptionQuery.name != null and receptionQuery.name != ''">
+				and  LOCATE(#{receptionQuery.name},letter.trip_name) > 0
+			</if>
+		</where>
+		order by letter.date_created desc
+		limit #{offset},#{max}
+	</select>
+
+	<select id="findCountWithPage" resultType="int">
+		<bind name="logicDelete" value="@com.zkml.common.obj.enums.BooleanEnum@NO" />
+		SELECT count(*)
+		FROM official_letter
+		<where>
+			AND logic_delete=#{logicDelete}
+			<if test="receptionQuery.name != null and receptionQuery.name != ''">
+				and  LOCATE(#{receptionQuery.name},trip_name) > 0
+			</if>
+		</where>
+	</select>
+</mapper>

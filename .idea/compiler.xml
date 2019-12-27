@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="gov_portal_eureka" />
+        <module name="gov_portal_facade" />
+        <module name="gov_portal_zuul" />
+        <module name="meeting_eureka" />
+        <module name="meeting_facade" />
+        <module name="meeting_server" />
+        <module name="meeting_zuul" />
+        <module name="official_client" />
+        <module name="official_eureka" />
+        <module name="official_facade" />
+        <module name="official_server" />
+        <module name="official_zuul" />
+      </profile>
+      <profile name="Annotation profile for meeting" enabled="true">
+        <sourceOutputDir name="../../meeting_base/meeting_client/target/generated-sources/annotations" />
+        <sourceTestOutputDir name="../../meeting_base/meeting_client/target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="meeting_client" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="gov_portal" target="1.8" />
+      <module name="gov_portal_client" target="1.8" />
+      <module name="gov_portal_eureka" target="1.8" />
+      <module name="gov_portal_facade" target="1.8" />
+      <module name="gov_portal_office" target="1.8" />
+      <module name="gov_portal_server" target="1.8" />
+      <module name="gov_portal_zuul" target="1.8" />
+      <module name="meeting" target="1.8" />
+      <module name="meeting_base" target="1.8" />
+      <module name="meeting_client" target="1.8" />
+      <module name="meeting_eureka" target="1.8" />
+      <module name="meeting_facade" target="1.8" />
+      <module name="meeting_portal" target="1.8" />
+      <module name="meeting_portal_base" target="1.5" />
+      <module name="meeting_portal_client" target="1.5" />
+      <module name="meeting_portal_eureka" target="1.5" />
+      <module name="meeting_portal_facade" target="1.8" />
+      <module name="meeting_portal_office" target="1.8" />
+      <module name="meeting_portal_server" target="1.5" />
+      <module name="meeting_portal_zuul" target="1.5" />
+      <module name="meeting_server" target="1.8" />
+      <module name="meeting_zuul" target="1.8" />
+      <module name="official" target="1.8" />
+      <module name="official_client" target="1.8" />
+      <module name="official_eureka" target="1.8" />
+      <module name="official_facade" target="1.8" />
+      <module name="official_reception" target="1.8" />
+      <module name="official_server" target="1.8" />
+      <module name="official_zuul" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+</project>

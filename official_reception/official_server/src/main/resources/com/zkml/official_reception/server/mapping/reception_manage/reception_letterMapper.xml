@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zkml.official_reception.server.dao.ReceptionLetterDAO">
+ 	<resultMap id="LetterResultMap" type="com.zkml.official_reception.server.po.ReceptionLetterPO">
+		<result column="letter_reception_letter_id" property="receptionLetterId" jdbcType="VARCHAR" />
+		<result column="letter_reception_letter_name" property="receptionLetterName" jdbcType="VARCHAR" />
+		<result column="letter_dispatched_organ" property="dispatchedOrgan" jdbcType="VARCHAR" />
+		<result column="letter_apply_user_id" property="applyUserId" jdbcType="VARCHAR" />
+		<result column="letter_apply_user_name" property="applyUserName" jdbcType="VARCHAR" />
+		<result column="letter_process_instance_id" property="processInstanceId" jdbcType="VARCHAR" />
+		<result column="letter_visiting_type" property="visitingType" jdbcType="VARCHAR" />
+		<result column="letter_dispatched_organ_linkman_name" property="dispatchedOrganLinkmanName" jdbcType="VARCHAR" />
+		<result column="letter_dispatched_organ_linkman_duty" property="dispatchedOrganLinkmanDuty" jdbcType="VARCHAR" />
+		<result column="letter_dispatched_organ_linkman_tel" property="dispatchedOrganLinkmanTel" jdbcType="VARCHAR" />
+		<result column="letter_visiting_start_time" property="visitingStartTime" jdbcType="TIMESTAMP" />
+		<result column="letter_visiting_end_time" property="visitingEndTime" jdbcType="TIMESTAMP" />
+		<result column="letter_visiting_count" property="visitingCount" jdbcType="VARCHAR" />
+		<result column="letter_visiting_during" property="visitingDuring" jdbcType="VARCHAR" />
+		<result column="letter_reception_organ_linkman_name" property="receptionOrganLinkmanName" jdbcType="VARCHAR" />
+		<result column="letter_reception_organ_linkman_tel" property="receptionOrganLinkmanTel" jdbcType="VARCHAR" />
+		<result column="letter_reception_organ_linkman_duty" property="receptionOrganLinkmanDuty" jdbcType="VARCHAR" />
+		<result column="letter_reception_level" property="receptionLevel" jdbcType="VARCHAR" />
+		<result column="letter_boolean_secret" property="booleanSecret" jdbcType="VARCHAR" />
+		<result column="letter_attachmentURL" property="attachmentURL" jdbcType="VARCHAR" />
+		<result column="letter_audit_status" property="auditStatus" jdbcType="CHAR" />
+		<result column="letter_official_letter_id" property="officialLetterId" jdbcType="VARCHAR" />
+		<result column="letter_remark" property="remark" jdbcType="VARCHAR" />
+		<result column="letter_date_created" property="dateCreated" jdbcType="TIMESTAMP" />
+		<result column="letter_status" property="status" jdbcType="CHAR" />
+		<result column="letter_last_updated" property="lastUpdated" jdbcType="TIMESTAMP" />
+		<result column="letter_logic_delete" property="logicDelete" jdbcType="CHAR" />
+	</resultMap>
+	<sql id="selectLetterColumnAlias">
+		letter.reception_letter_id as letter_reception_letter_id,
+		letter.reception_letter_name as letter_reception_letter_name,
+		letter.dispatched_organ as letter_dispatched_organ,
+		letter.apply_user_id as letter_apply_user_id,
+		letter.apply_user_name as letter_apply_user_name,
+		letter.process_instance_id as letter_process_instance_id,
+		letter.visiting_type as letter_visiting_type,
+		letter.dispatched_organ_linkman_name as letter_dispatched_organ_linkman_name,
+		letter.dispatched_organ_linkman_duty as letter_dispatched_organ_linkman_duty,
+		letter.dispatched_organ_linkman_tel as letter_dispatched_organ_linkman_tel,
+		letter.visiting_start_time as letter_visiting_start_time,
+		letter.visiting_end_time as letter_visiting_end_time,
+		letter.visiting_count as letter_visiting_count,
+		letter.visiting_during as letter_visiting_during,
+		letter.reception_organ_linkman_name as letter_reception_organ_linkman_name,
+		letter.reception_organ_linkman_tel as letter_reception_organ_linkman_tel,
+		letter.reception_organ_linkman_duty as letter_reception_organ_linkman_duty,
+		letter.reception_level as letter_reception_level,
+		letter.boolean_secret as letter_boolean_secret,
+		letter.attachmentURL as letter_attachmentURL,
+		letter.audit_status as letter_audit_status,
+		letter.official_letter_id as letter_official_letter_id,
+		letter.remark as letter_remark,
+		letter.status as letter_status,
+		letter.date_created as letter_date_created,
+		letter.logic_delete as letter_logic_delete,
+		letter.last_updated as letter_last_updated
+	</sql>
+
+ 	<insert id="create">
+        insert into `reception_letter`
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			reception_letter_id,
+			<if test="receptionLetterPO.receptionLetterName != null">reception_letter_name,</if>
+			<if test="receptionLetterPO.dispatchedOrgan != null">dispatched_organ,</if>
+			<if test="receptionLetterPO.applyUserId != null">apply_user_id,</if>
+			<if test="receptionLetterPO.applyUserName != null">apply_user_name,</if>
+			<if test="receptionLetterPO.processInstanceId != null">process_instance_id,</if>
+			<if test="receptionLetterPO.visitingType != null">visiting_type,</if>
+			<if test="receptionLetterPO.dispatchedOrganLinkmanName != null">dispatched_organ_linkman_name,</if>
+			<if test="receptionLetterPO.dispatchedOrganLinkmanDuty != null">dispatched_organ_linkman_duty,</if>
+			<if test="receptionLetterPO.dispatchedOrganLinkmanTel != null">dispatched_organ_linkman_tel,</if>
+			<if test="receptionLetterPO.visitingStartTime != null">visiting_start_time,</if>
+			<if test="receptionLetterPO.visitingEndTime != null">visiting_end_time,</if>
+			<if test="receptionLetterPO.visitingCount != null">visiting_count,</if>
+			<if test="receptionLetterPO.visitingDuring != null">visiting_during,</if>
+			<if test="receptionLetterPO.receptionOrganLinkmanName != null">reception_organ_linkman_name,</if>
+			<if test="receptionLetterPO.receptionOrganLinkmanTel != null">reception_organ_linkman_tel,</if>
+			<if test="receptionLetterPO.receptionOrganLinkmanDuty != null">reception_organ_linkman_duty,</if>
+			<if test="receptionLetterPO.receptionLevel != null">reception_level,</if>
+			<if test="receptionLetterPO.booleanSecret != null">boolean_secret,</if>
+			<if test="receptionLetterPO.attachmentURL != null">attachmentURL,</if>
+			<if test="receptionLetterPO.officialLetterId != null">official_letter_id,</if>
+			<if test="receptionLetterPO.remark != null">remark,</if>
+			<if test="receptionLetterPO.auditStatus != null">audit_status,</if>
+			<if test="receptionLetterPO.status != null">status,</if>
+			<if test="receptionLetterPO.logicDelete != null">logic_delete,</if>
+			date_created,
+			last_updated,
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			UUID(),
+			<if test="receptionLetterPO.receptionLetterName!= null">#{receptionLetterPO.receptionLetterName,jdbcType=VARCHAR},</if>
+			<if test="receptionLetterPO.dispatchedOrgan!= null">#{receptionLetterPO.dispatchedOrgan,jdbcType=VARCHAR},</if>
+			<if test="receptionLetterPO.applyUserId != null">#{receptionLetterPO.applyUserId,jdbcType=VARCHAR},</if>
+			<if test="receptionLetterPO.applyUserName!= null">#{receptionLetterPO.applyUserName,jdbcType=VARCHAR},</if>
+			<if test="receptionLetterPO.processInstanceId!= null">#{receptionLetterPO.processInstanceId,jdbcType=VARCHAR},</if>
+			<if test="receptionLetterPO.visitingType!= null">#{receptionLetterPO.visitingType,jdbcType=VARCHAR},</if>
+			<if test="receptionLetterPO.dispatchedOrganLinkmanName!= null">#{receptionLetterPO.dispatchedOrganLinkmanName,jdbcType=VARCHAR},</if>
+			<if test="receptionLetterPO.dispatchedOrganLinkmanDuty!= null">#{receptionLetterPO.dispatchedOrganLinkmanDuty,jdbcType=VARCHAR},</if>
+			<if test="receptionLetterPO.dispatchedOrganLinkmanTel!= null">#{receptionLetterPO.dispatchedOrganLinkmanTel,jdbcType=VARCHAR},</if>
+			<if test="receptionLetterPO.visitingStartTime!= null">#{receptionLetterPO.visitingStartTime,jdbcType=TIMESTAMP},</if>
+			<if test="receptionLetterPO.visitingEndTime!= null">#{receptionLetterPO.visitingEndTime,jdbcType=TIMESTAMP},</if>
+			<if test="receptionLetterPO.visitingCount!= null">#{receptionLetterPO.visitingCount,jdbcType=VARCHAR},</if>
+			<if test="receptionLetterPO.visitingDuring!= null">#{receptionLetterPO.visitingDuring,jdbcType=TIMESTAMP},</if>
+			<if test="receptionLetterPO.receptionOrganLinkmanName!= null">#{receptionLetterPO.receptionOrganLinkmanName,jdbcType=VARCHAR},</if>
+			<if test="receptionLetterPO.receptionOrganLinkmanTel!= null">#{receptionLetterPO.receptionOrganLinkmanTel,jdbcType=VARCHAR},</if>
+			<if test="receptionLetterPO.receptionOrganLinkmanDuty!= null">#{receptionLetterPO.receptionOrganLinkmanDuty,jdbcType=VARCHAR},</if>
+			<if test="receptionLetterPO.receptionLevel!= null">#{receptionLetterPO.receptionLevel,jdbcType=VARCHAR},</if>
+			<if test="receptionLetterPO.booleanSecret!= null">#{receptionLetterPO.booleanSecret,jdbcType=VARCHAR},</if>
+			<if test="receptionLetterPO.attachmentURL!= null">#{receptionLetterPO.attachmentURL,jdbcType=VARCHAR},</if>
+			<if test="receptionLetterPO.officialLetterId!= null">#{receptionLetterPO.officialLetterId,jdbcType=VARCHAR},</if>
+			<if test="receptionLetterPO.remark!= null">#{receptionLetterPO.remark,jdbcType=VARCHAR},</if>
+			<if test="receptionLetterPO.auditStatus!= null">#{receptionLetterPO.auditStatus,jdbcType=CHAR},</if>
+			<if test="receptionLetterPO.status!= null">#{receptionLetterPO.status,jdbcType=CHAR},</if>
+			<if test="receptionLetterPO.logicDelete!= null">#{receptionLetterPO.logicDelete,jdbcType=CHAR},</if>
+			CURRENT_TIMESTAMP,
+			CURRENT_TIMESTAMP,
+		</trim>
+	</insert>
+
+	<update id="update">
+		update `reception_letter`
+		<set>
+			<if test="receptionLetterPO.receptionLetterId!= null">reception_letter_id=#{receptionLetterPO.receptionLetterId,jdbcType=VARCHAR},</if>
+			<if test="receptionLetterPO.receptionLetterName!= null">reception_letter_name=#{receptionLetterPO.receptionLetterName,jdbcType=VARCHAR},</if>
+			<if test="receptionLetterPO.dispatchedOrgan!= null">dispatched_organ=#{receptionLetterPO.dispatchedOrgan,jdbcType=VARCHAR},</if>
+			<if test="receptionLetterPO.applyUserId != null">apply_user_id=#{receptionLetterPO.applyUserId,jdbcType=VARCHAR},</if>
+			<if test="receptionLetterPO.applyUserName!= null">apply_user_name=#{receptionLetterPO.applyUserName,jdbcType=VARCHAR},</if>
+			<if test="receptionLetterPO.processInstanceId!= null">process_instance_id=#{receptionLetterPO.processInstanceId,jdbcType=VARCHAR},</if>
+			<if test="receptionLetterPO.visitingType!= null">visiting_type=#{receptionLetterPO.visitingType,jdbcType=VARCHAR},</if>
+			<if test="receptionLetterPO.dispatchedOrganLinkmanName!= null">dispatched_organ_linkman_name=#{receptionLetterPO.dispatchedOrganLinkmanName,jdbcType=VARCHAR},</if>
+			<if test="receptionLetterPO.dispatchedOrganLinkmanDuty!= null">dispatched_organ_linkman_duty=#{receptionLetterPO.dispatchedOrganLinkmanDuty,jdbcType=VARCHAR},</if>
+			<if test="receptionLetterPO.dispatchedOrganLinkmanTel!= null">dispatched_organ_linkman_tel=#{receptionLetterPO.dispatchedOrganLinkmanTel,jdbcType=VARCHAR},</if>
+			<if test="receptionLetterPO.visitingStartTime!= null">visiting_start_time=#{receptionLetterPO.visitingStartTime,jdbcType=TIMESTAMP},</if>
+			<if test="receptionLetterPO.visitingEndTime!= null">visiting_end_time=#{receptionLetterPO.visitingEndTime,jdbcType=TIMESTAMP},</if>
+			<if test="receptionLetterPO.visitingCount!= null">visiting_count=#{receptionLetterPO.visitingCount,jdbcType=VARCHAR},</if>
+			<if test="receptionLetterPO.visitingDuring!= null">visiting_during=#{receptionLetterPO.visitingDuring,jdbcType=TIMESTAMP},</if>
+			<if test="receptionLetterPO.receptionOrganLinkmanName!= null">reception_organ_linkman_name=#{receptionLetterPO.receptionOrganLinkmanName,jdbcType=VARCHAR},</if>
+			<if test="receptionLetterPO.receptionOrganLinkmanTel!= null">reception_organ_linkman_tel=#{receptionLetterPO.receptionOrganLinkmanTel,jdbcType=VARCHAR},</if>
+			<if test="receptionLetterPO.receptionOrganLinkmanDuty!= null">reception_organ_linkman_duty=#{receptionLetterPO.receptionOrganLinkmanDuty,jdbcType=VARCHAR},</if>
+			<if test="receptionLetterPO.receptionLevel!= null">reception_level=#{receptionLetterPO.receptionLevel,jdbcType=VARCHAR},</if>
+			<if test="receptionLetterPO.booleanSecret!= null">boolean_secret=#{receptionLetterPO.booleanSecret,jdbcType=VARCHAR},</if>
+			<if test="receptionLetterPO.attachmentURL!= null">attachmentURL=#{receptionLetterPO.attachmentURL,jdbcType=VARCHAR},</if>
+			<if test="receptionLetterPO.officialLetterId!= null">official_letter_id=#{receptionLetterPO.officialLetterId,jdbcType=VARCHAR},</if>
+			<if test="receptionLetterPO.remark!= null">remark=#{receptionLetterPO.remark,jdbcType=VARCHAR},</if>
+			<if test="receptionLetterPO.auditStatus!= null">audit_status=#{receptionLetterPO.auditStatus,jdbcType=CHAR},</if>
+			<if test="receptionLetterPO.status!= null">status=#{receptionLetterPO.status,jdbcType=CHAR},</if>
+			<if test="receptionLetterPO.logicDelete!= null">logic_delete=#{receptionLetterPO.logicDelete,jdbcType=CHAR},</if>
+			last_updated=CURRENT_TIMESTAMP,
+		</set>
+		where reception_letter_id = #{receptionLetterPO.receptionLetterId,jdbcType=VARCHAR}
+	</update>
+
+
+
+
+	<update id="delete" >
+		<bind name="logicDelete" value="@com.zkml.common.obj.enums.BooleanEnum@YES" />
+		UPDATE `reception_letter` SET logic_delete=#{logicDelete} where reception_letter_id = #{receptionLetterId,jdbcType=VARCHAR}
+	</update>
+
+	<select id="findByReceptionLetterId" resultMap="LetterResultMap">
+		<bind name="logicDelete" value="@com.zkml.common.obj.enums.BooleanEnum@NO" />
+		select
+        <include refid="selectLetterColumnAlias" />
+		from   `reception_letter` letter  where letter_reception_letter_id = #{receptionLetterId,jdbcType=VARCHAR} AND letter_logic_delete = #{logicDelete}
+	</select>
+
+</mapper>

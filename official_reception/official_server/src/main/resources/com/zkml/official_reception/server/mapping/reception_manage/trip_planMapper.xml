@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zkml.official_reception.server.dao.TripPlanDAO">
+ 	<resultMap id="PlanResultMap" type="com.zkml.official_reception.server.po.TripPlanPO">
+		<result column="plan_trip_id" property="tripId" jdbcType="VARCHAR" />
+		<result column="plan_reception_letter_id" property="receptionLetterId" jdbcType="VARCHAR" />
+		<result column="plan_visiting_type" property="visitingType" jdbcType="CHAR" />
+		<result column="plan_apply_user_id" property="applyUserId" jdbcType="VARCHAR" />
+		<result column="plan_apply_user_name" property="applyUserName" jdbcType="VARCHAR" />
+		<result column="plan_process_instance_id" property="processInstanceId" jdbcType="VARCHAR" />
+		<result column="plan_trip_name" property="tripName" jdbcType="VARCHAR" />
+		<result column="plan_reception_x" property="receptionX" jdbcType="VARCHAR" />
+		<result column="plan_reception_y" property="receptionY" jdbcType="VARCHAR" />
+		<result column="plan_reception_time" property="receptionTime" jdbcType="VARCHAR" />
+		<result column="plan_visiting_count" property="visitingCount" jdbcType="VARCHAR" />
+		<result column="plan_visiting_person" property="visitingPerson" jdbcType="VARCHAR" />
+		<result column="plan_area_id" property="areaId" jdbcType="VARCHAR" />
+		<result column="plan_remark" property="remark" jdbcType="VARCHAR" />
+		<result column="plan_audit_status" property="auditStatus" jdbcType="CHAR" />
+		<result column="plan_date_created" property="dateCreated" jdbcType="TIMESTAMP" />
+		<result column="plan_status" property="status" jdbcType="CHAR" />
+		<result column="plan_last_updated" property="lastUpdated" jdbcType="TIMESTAMP" />
+		<result column="plan_logic_delete" property="logicDelete" jdbcType="CHAR" />
+	</resultMap>
+	<sql id="selectPlanColumnAlias">
+		plan.trip_id as plan_trip_id,
+		plan.reception_letter_id as plan_reception_letter_id,
+		plan.visiting_type as plan_visiting_type,
+		plan.apply_user_id as plan_apply_user_id,
+		plan.apply_user_name as plan_apply_user_name,
+		plan.process_instance_id as plan_process_instance_id,
+		plan.trip_name as plan_trip_name,
+		plan.reception_x as plan_reception_x,
+		plan.reception_y as plan_reception_y,
+		plan.reception_time as plan_reception_time,
+		plan.visiting_count as plan_visiting_count,
+		plan.visiting_person as plan_visiting_person,
+		plan.area_id as plan_area_id,
+		plan.remark as plan_remark,
+		plan.audit_status as plan_audit_status,
+		plan.date_created as plan_date_created,
+		plan.status as plan_status,
+		plan.last_updated as plan_last_updated,
+		plan.logic_delete as plan_logic_delete
+	</sql>
+	<insert id="" >
+		insert into `trip_plan` (trip_id,reception_letter_id,visiting_type,apply_user_id,apply_user_name,process_instance_id,trip_name,reception_x,reception_y,reception_time,visiting_count,visiting_person,area_id,remark,audit_status,date_created,status,last_updated,logic_delete,)
+		<foreach collection="carBasePOList" item="item" separator=",">
+			(
+			#{item.tripId,jdbcType=VARCHAR},
+			#{item.receptionLetterId,jdbcType=VARCHAR},
+			#{item.visitingType,jdbcType=CHAR},
+			#{item.applyUserId,jdbcType=VARCHAR},
+			#{item.applyUserName,jdbcType=VARCHAR},
+			#{item.processInstanceId,jdbcType=VARCHAR},
+			#{item.tripName,jdbcType=VARCHAR},
+			#{item.receptionX,jdbcType=VARCHAR},
+			#{item.receptionY,jdbcType=VARCHAR},
+			#{item.receptionTime,jdbcType=VARCHAR},
+			#{item.visitingCount,jdbcType=VARCHAR},
+			#{item.visitingPerson,jdbcType=VARCHAR},
+			#{item.areaId,jdbcType=VARCHAR},
+			#{item.remark,jdbcType=VARCHAR},
+			#{item.auditStatus,jdbcType=CHAR},
+			CURRENT_TIMESTAMP,
+			#{item.status,jdbcType=CHAR},
+			CURRENT_TIMESTAMP,
+			#{item.logicDelete,jdbcType=CHAR},
+			)
+		</foreach>
+	</insert>
+	<insert id="create" >
+		insert into `trip_plan`
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="tripId != null">trip_id,</if>
+			<if test="receptionLetterId != null">reception_letter_id,</if>
+			<if test="visitingType != null">visiting_type,</if>
+			<if test="applyUserId != null">apply_user_id,</if>
+			<if test="applyUserName != null">apply_user_name,</if>
+			<if test="processInstanceId != null">process_instance_id,</if>
+			<if test="tripName != null">trip_name,</if>
+			<if test="receptionX != null">reception_x,</if>
+			<if test="receptionY != null">reception_y,</if>
+			<if test="receptionTime != null">reception_time,</if>
+			<if test="visitingCount != null">visiting_count,</if>
+			<if test="visitingPerson != null">visiting_person,</if>
+			<if test="areaId != null">area_id,</if>
+			<if test="remark != null">remark,</if>
+			<if test="auditStatus != null">audit_status,</if>
+			date_created,
+			<if test="status != null">status,</if>
+			last_updated,
+			<if test="logicDelete != null">logic_delete,</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="tripId!= null">#{tripId,jdbcType=VARCHAR},</if>
+			<if test="receptionLetterId!= null">#{receptionLetterId,jdbcType=VARCHAR},</if>
+			<if test="visitingType!= null">#{visitingType,jdbcType=CHAR},</if>
+			<if test="applyUserId!= null">#{applyUserId,jdbcType=VARCHAR},</if>
+			<if test="applyUserName!= null">#{applyUserName,jdbcType=VARCHAR},</if>
+			<if test="processInstanceId!= null">#{processInstanceId,jdbcType=VARCHAR},</if>
+			<if test="tripName!= null">#{tripName,jdbcType=VARCHAR},</if>
+			<if test="receptionX!= null">#{receptionX,jdbcType=VARCHAR},</if>
+			<if test="receptionY!= null">#{receptionY,jdbcType=VARCHAR},</if>
+			<if test="receptionTime!= null">#{receptionTime,jdbcType=VARCHAR},</if>
+			<if test="visitingCount!= null">#{visitingCount,jdbcType=VARCHAR},</if>
+			<if test="visitingPerson!= null">#{visitingPerson,jdbcType=VARCHAR},</if>
+			<if test="areaId!= null">#{areaId,jdbcType=VARCHAR},</if>
+			<if test="remark!= null">#{remark,jdbcType=VARCHAR},</if>
+			<if test="auditStatus!= null">#{auditStatus,jdbcType=CHAR},</if>
+			CURRENT_TIMESTAMP,
+			<if test="status!= null">#{status,jdbcType=CHAR},</if>
+			CURRENT_TIMESTAMP,
+			<if test="logicDelete!= null">#{logicDelete,jdbcType=CHAR},</if>
+		</trim>
+	</insert>
+
+	<update id="update" >
+		update `trip_plan`
+		<set>
+			<if test="tripId!= null">trip_id=#{tripId,jdbcType=VARCHAR},</if>
+			<if test="receptionLetterId!= null">reception_letter_id=#{receptionLetterId,jdbcType=VARCHAR},</if>
+			<if test="visitingType!= null">visiting_type=#{visitingType,jdbcType=CHAR},</if>
+			<if test="applyUserId!= null">apply_user_id=#{applyUserId,jdbcType=VARCHAR},</if>
+			<if test="applyUserName!= null">apply_user_name=#{applyUserName,jdbcType=VARCHAR},</if>
+			<if test="processInstanceId!= null">process_instance_id=#{processInstanceId,jdbcType=VARCHAR},</if>
+			<if test="tripName!= null">trip_name=#{tripName,jdbcType=VARCHAR},</if>
+			<if test="receptionX!= null">reception_x=#{receptionX,jdbcType=VARCHAR},</if>
+			<if test="receptionY!= null">reception_y=#{receptionY,jdbcType=VARCHAR},</if>
+			<if test="receptionTime!= null">reception_time=#{receptionTime,jdbcType=VARCHAR},</if>
+			<if test="visitingCount!= null">visiting_count=#{visitingCount,jdbcType=VARCHAR},</if>
+			<if test="visitingPerson!= null">visiting_person=#{visitingPerson,jdbcType=VARCHAR},</if>
+			<if test="areaId!= null">area_id=#{areaId,jdbcType=VARCHAR},</if>
+			<if test="remark!= null">remark=#{remark,jdbcType=VARCHAR},</if>
+			<if test="auditStatus!= null">audit_status=#{auditStatus,jdbcType=CHAR},</if>
+			<if test="status!= null">status=#{status,jdbcType=CHAR},</if>
+			last_updated=CURRENT_TIMESTAMP,
+			<if test="logicDelete!= null">logic_delete=#{logicDelete,jdbcType=CHAR},</if>
+		</set>
+		where trip_id = #{tripId,jdbcType=CHAR}
+	</update>
+
+
+	<update id="delete" >
+		<bind name="logicDelete" value="@com.zkml.common.obj.enums.BooleanEnum@YES" />
+		UPDATE `trip_plan` SET logic_delete=#{logicDelete} where trip_id = #{tripId,jdbcType=VARCHAR}
+	</update>
+
+
+	<select id="findByOfficialLetterId" resultMap="PlanResultMap">
+		<bind name="logicDelete" value="@com.zkml.common.obj.enums.BooleanEnum@NO" />
+		select
+		<include refid="selectPlanColumnAlias" />
+		from   `trip_plan` plan where  logic_delete=#{logicDelete} AND official_letter_id = #{officialLetterId,jdbcType=VARCHAR}
+		ORDER BY plan.reception_time
+	</select>
+
+
+	<select id="findTripWithPage" resultMap="PlanResultMap">
+		<bind name="logicDelete" value="@com.zkml.common.obj.enums.BooleanEnum@NO" />
+		select
+        <include refid="selectPlanColumnAlias" />
+		from   `trip_plan` plan
+		<where>
+			AND logic_delete=#{logicDelete}
+			<if test="receptionQuery.name != null and receptionQuery.name != ''">
+				and  LOCATE(#{receptionQuery.name},plan.trip_name) > 0
+			</if>
+		</where>
+		order by plan.date_created desc
+		limit #{offset},#{max}
+	</select>
+
+	<select id="findCountWithPage" resultType="int">
+		<bind name="logicDelete" value="@com.zkml.common.obj.enums.BooleanEnum@NO" />
+		SELECT count(*)
+		FROM trip_plan
+		<where>
+			AND logic_delete=#{logicDelete}
+			<if test="receptionQuery.name != null and receptionQuery.name != ''">
+				and  LOCATE(#{receptionQuery.name},trip_name) > 0
+			</if>
+		</where>
+	</select>
+
+
+
+</mapper>

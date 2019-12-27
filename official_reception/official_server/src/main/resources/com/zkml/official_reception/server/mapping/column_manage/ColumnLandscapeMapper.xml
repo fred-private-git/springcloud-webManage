@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zkml.official_reception.server.dao.ColumnLandscapeDAO">
+ 	<resultMap id="LandscapeResultMap" type="com.zkml.official_reception.server.po.ColumnLandscapePO">
+		<result column="landscape_column_landscape_id" property="columnLandscapeId" jdbcType="VARCHAR" />
+		<result column="landscape_column_landscape_name" property="columnLandscapeName" jdbcType="VARCHAR" />
+		<result column="landscape_belong_column_id" property="belongColumnId" jdbcType="VARCHAR" />
+		<result column="landscape_area_id" property="areaId" jdbcType="VARCHAR" />
+		<result column="landscape_detailed_address" property="detailedAddress" jdbcType="VARCHAR" />
+		<result column="landscape_brief_introduction" property="briefIntroduction" jdbcType="VARCHAR" />
+		<result column="landscape_url" property="url" jdbcType="VARCHAR" />
+		<result column="landscape_site_img_y" property="siteImgY" jdbcType="VARCHAR" />
+		<result column="landscape_site_img_x" property="siteImgX" jdbcType="VARCHAR" />
+		<result column="landscape_attach_img" property="attachImg" jdbcType="VARCHAR" />
+		<result column="landscape_date_created" property="dateCreated" jdbcType="TIMESTAMP" />
+		<result column="landscape_last_updated" property="lastUpdated" jdbcType="TIMESTAMP" />
+		<result column="landscape_logic_delete" property="logicDelete" jdbcType="CHAR" />
+	</resultMap>
+	<sql id="selectLandscapeColumnAlias">
+		landscape.column_landscape_id as landscape_column_landscape_id,
+		landscape.column_landscape_name as landscape_column_landscape_name,
+		landscape.belong_column_id as landscape_belong_column_id,
+		landscape.area_id as landscape_area_id,
+		landscape.detailed_address as landscape_detailed_address,
+		landscape.brief_introduction as landscape_brief_introduction,
+		landscape.url as landscape_url,
+		landscape.site_img_y as landscape_site_img_y,
+		landscape.site_img_x as landscape_site_img_x,
+		landscape.attach_img as landscape_attach_img,
+		landscape.date_created as landscape_date_created,
+		landscape.last_updated as landscape_last_updated,
+		landscape.logic_delete as landscape_logic_delete
+	</sql>
+	<insert id="" >
+        insert into `column_landscape` (column_landscape_id,column_landscape_name,belong_column_id,area_id,detailed_address,brief_introduction,url,site_img_y,site_img_x,attach_img,date_created,last_updated,logic_delete,)
+        <foreach collection="carBasePOList" item="item" separator=",">
+			(
+						#{item.columnLandscapeId,jdbcType=VARCHAR},
+						#{item.columnLandscapeName,jdbcType=VARCHAR},
+						#{item.belongColumnId,jdbcType=VARCHAR},
+						#{item.areaId,jdbcType=VARCHAR},
+						#{item.detailedAddress,jdbcType=VARCHAR},
+						#{item.briefIntroduction,jdbcType=VARCHAR},
+						#{item.url,jdbcType=VARCHAR},
+						#{item.siteImgY,jdbcType=VARCHAR},
+						#{item.siteImgX,jdbcType=VARCHAR},
+						#{item.attachImg,jdbcType=VARCHAR},
+						CURRENT_TIMESTAMP,
+						CURRENT_TIMESTAMP,
+						#{item.logicDelete,jdbcType=CHAR},
+			)
+		</foreach>
+	</insert>
+ 	<insert id="createLandscape" parameterType="com.zkml.official_reception.server.po.ColumnLandscapePO">
+        insert into `column_landscape`
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="columnLandscapeId != null">column_landscape_id,</if>
+			<if test="columnLandscapeName != null">column_landscape_name,</if>
+			<if test="belongColumnId != null">belong_column_id,</if>
+			<if test="areaId != null">area_id,</if>
+			<if test="detailedAddress != null">detailed_address,</if>
+			<if test="briefIntroduction != null">brief_introduction,</if>
+			<if test="url != null">url,</if>
+			<if test="siteImgY != null">site_img_y,</if>
+			<if test="siteImgX != null">site_img_x,</if>
+			<if test="attachImg != null">attach_img,</if>
+			date_created,
+			last_updated,
+			<if test="logicDelete != null">logic_delete,</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="columnLandscapeId!= null">#{columnLandscapeId,jdbcType=VARCHAR},</if>
+			<if test="columnLandscapeName!= null">#{columnLandscapeName,jdbcType=VARCHAR},</if>
+			<if test="belongColumnId!= null">#{belongColumnId,jdbcType=VARCHAR},</if>
+			<if test="areaId!= null">#{areaId,jdbcType=VARCHAR},</if>
+			<if test="detailedAddress!= null">#{detailedAddress,jdbcType=VARCHAR},</if>
+			<if test="briefIntroduction!= null">#{briefIntroduction,jdbcType=VARCHAR},</if>
+			<if test="url!= null">#{url,jdbcType=VARCHAR},</if>
+			<if test="siteImgY!= null">#{siteImgY,jdbcType=VARCHAR},</if>
+			<if test="siteImgX!= null">#{siteImgX,jdbcType=VARCHAR},</if>
+			<if test="attachImg!= null">#{attachImg,jdbcType=VARCHAR},</if>
+			CURRENT_TIMESTAMP,
+			CURRENT_TIMESTAMP,
+			<if test="logicDelete!= null">#{logicDelete,jdbcType=CHAR},</if>
+		</trim>
+	</insert>
+
+	<update id="updateLandscapeById" parameterType="com.zkml.official_reception.server.po.ColumnLandscapePO">
+		update `column_landscape`
+		<set>
+            <if test="columnLandscapeId!= null">column_landscape_id=#{columnLandscapeId,jdbcType=VARCHAR},</if>
+			<if test="columnLandscapeName!= null">column_landscape_name=#{columnLandscapeName,jdbcType=VARCHAR},</if>
+			<if test="belongColumnId!= null">belong_column_id=#{belongColumnId,jdbcType=VARCHAR},</if>
+			<if test="areaId!= null">area_id=#{areaId,jdbcType=VARCHAR},</if>
+			<if test="detailedAddress!= null">detailed_address=#{detailedAddress,jdbcType=VARCHAR},</if>
+			<if test="briefIntroduction!= null">brief_introduction=#{briefIntroduction,jdbcType=VARCHAR},</if>
+			<if test="url!= null">url=#{url,jdbcType=VARCHAR},</if>
+			<if test="siteImgY!= null">site_img_y=#{siteImgY,jdbcType=VARCHAR},</if>
+			<if test="siteImgX!= null">site_img_x=#{siteImgX,jdbcType=VARCHAR},</if>
+			<if test="attachImg!= null">attach_img=#{attachImg,jdbcType=VARCHAR},</if>
+			last_updated=CURRENT_TIMESTAMP,
+            <if test="logicDelete!= null">logic_delete=#{logicDelete,jdbcType=CHAR},</if>
+		</set>
+		where column_landscape_id = #{columnLandscapeId,jdbcType=VARCHAR}
+	</update>
+    <update id="update4Null" parameterType="com.zkml.official_reception.server.po.ColumnLandscapePO">
+        update `column_landscape`
+        <set>
+			column_landscape_id=#{columnLandscapeId,jdbcType=VARCHAR},
+			column_landscape_name=#{columnLandscapeName,jdbcType=VARCHAR},
+			belong_column_id=#{belongColumnId,jdbcType=VARCHAR},
+			area_id=#{areaId,jdbcType=VARCHAR},
+			detailed_address=#{detailedAddress,jdbcType=VARCHAR},
+			brief_introduction=#{briefIntroduction,jdbcType=VARCHAR},
+			url=#{url,jdbcType=VARCHAR},
+			site_img_y=#{siteImgY,jdbcType=VARCHAR},
+			site_img_x=#{siteImgX,jdbcType=VARCHAR},
+			attach_img=#{attachImg,jdbcType=VARCHAR},
+			last_updated=CURRENT_TIMESTAMP,
+			logic_delete=#{logicDelete,jdbcType=CHAR},
+        </set>
+        where column_landscape_id =#{columnLandscapeId,jdbcType=CHAR}
+    </update>
+
+	<update id="deleteLandscapeById" >
+		<bind name="logicDelete" value="@com.zkml.common.obj.enums.BooleanEnum@YES" />
+		update  `column_landscape` set logic_delete=#{logicDelete} where column_landscape_id = #{columnLandscapeId,jdbcType=VARCHAR}
+	</update>
+
+	<select id="findByColumnLandscapeId" resultMap="LandscapeResultMap">
+		<bind name="logicDelete" value="@com.zkml.common.obj.enums.BooleanEnum@NO" />
+		select
+        <include refid="selectLandscapeColumnAlias" />
+		from   `column_landscape` landscape where column_landscape_id = #{columnLandscapeId,jdbcType=VARCHAR} and logic_delete=#{logicDelete}
+	</select>
+
+	<select id="findWithPage"  resultMap="LandscapeResultMap">
+		<bind name="logicDelete" value="@com.zkml.common.obj.enums.BooleanEnum@NO" />
+		SELECT
+		<include refid="selectLandscapeColumnAlias" />
+		FROM `column_landscape` landscape
+		<where>
+			landscape.logic_delete = #{logicDelete}
+			<if test="receptionQuery.name != null and receptionQuery.name != ''">
+				and  LOCATE(#{receptionQuery.name},landscape.column_landscape_name) > 0
+			</if>
+			<if test="receptionQuery.areaId != null and receptionQuery.areaId != ''">
+				and  landscape.area_id=#{receptionQuery.areaId,jdbcType=VARCHAR}
+			</if>
+				and landscape.belong_column_id=#{receptionQuery.id,jdbcType=VARCHAR}
+		</where>
+		order by landscape.date_created desc
+		limit #{offset},#{max}
+	</select>
+
+	<select id="findCountWithPage" resultType="Long">
+		<bind name="logicDelete" value="@com.zkml.common.obj.enums.BooleanEnum@NO" />
+		SELECT count(*)
+		FROM `column_landscape`
+		<where>
+			logic_delete = #{logicDelete}
+			<if test="receptionQuery.name != null and receptionQuery.name != ''">
+				and  LOCATE(#{receptionQuery.name},hotel_name) > 0
+			</if>
+			<if test="receptionQuery.areaId != null and receptionQuery.areaId != ''">
+				and  area_id=#{receptionQuery.areaId}
+			</if>
+				and belong_column_id=#{receptionQuery.id,jdbcType=VARCHAR}
+		</where>
+	</select>
+</mapper>

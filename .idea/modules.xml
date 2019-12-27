@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/official.iml" filepath="$PROJECT_DIR$/official.iml" />
+      <module fileurl="file://$PROJECT_DIR$/official_reception/official_client/official_client.iml" filepath="$PROJECT_DIR$/official_reception/official_client/official_client.iml" />
+      <module fileurl="file://$PROJECT_DIR$/official_eureka/official_eureka.iml" filepath="$PROJECT_DIR$/official_eureka/official_eureka.iml" />
+      <module fileurl="file://$PROJECT_DIR$/official_facade/official_facade.iml" filepath="$PROJECT_DIR$/official_facade/official_facade.iml" />
+      <module fileurl="file://$PROJECT_DIR$/official_reception/official_reception.iml" filepath="$PROJECT_DIR$/official_reception/official_reception.iml" />
+      <module fileurl="file://$PROJECT_DIR$/official_reception/official_server/official_server.iml" filepath="$PROJECT_DIR$/official_reception/official_server/official_server.iml" />
+      <module fileurl="file://$PROJECT_DIR$/official_zuul/official_zuul.iml" filepath="$PROJECT_DIR$/official_zuul/official_zuul.iml" />
+    </modules>
+  </component>
+</project>

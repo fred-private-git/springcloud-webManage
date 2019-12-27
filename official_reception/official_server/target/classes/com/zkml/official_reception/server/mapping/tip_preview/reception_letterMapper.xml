@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zkml.official_reception.server.dao.ReceptionLetterDAO">
+ 	<resultMap id="LetterResultMap" type="com.zkml.official_reception.server.po.ReceptionLetterPO">
+		<result column="letter_official_letter_id" property="officialLetterId" jdbcType="VARCHAR" />
+		<result column="letter_reception_organ_id" property="receptionOrganId" jdbcType="VARCHAR" />
+		<result column="letter_reception_letter_id" property="receptionLetterId" jdbcType="VARCHAR" />
+		<result column="letter_reception_organ_user_name" property="receptionOrganUserName" jdbcType="VARCHAR" />
+		<result column="letter_reception_organ_user_tel" property="receptionOrganUserTel" jdbcType="VARCHAR" />
+		<result column="letter_reception_organ_user_organ" property="receptionOrganUserOrgan" jdbcType="VARCHAR" />
+		<result column="letter_reception_level" property="receptionLevel" jdbcType="VARCHAR" />
+		<result column="letter_reception_type" property="receptionType" jdbcType="VARCHAR" />
+		<result column="letter_boolean_secret" property="booleanSecret" jdbcType="VARCHAR" />
+		<result column="letter_date_created" property="dateCreated" jdbcType="TIMESTAMP" />
+		<result column="letter_last_updated" property="lastUpdated" jdbcType="VARCHAR" />
+		<result column="letter_audit_status" property="auditStatus" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="selectLetterColumnAlias">
+		letter.official_letter_id as letter_official_letter_id,
+		letter.reception_organ_id as letter_reception_organ_id,
+		letter.reception_letter_id as letter_reception_letter_id,
+		letter.reception_organ_user_name as letter_reception_organ_user_name,
+		letter.reception_organ_user_tel as letter_reception_organ_user_tel,
+		letter.reception_organ_user_organ as letter_reception_organ_user_organ,
+		letter.reception_level as letter_reception_level,
+		letter.reception_type as letter_reception_type,
+		letter.boolean_secret as letter_boolean_secret,
+		letter.date_created as letter_date_created,
+		letter.audit_status as letter_audit_status,
+		letter.last_updated as letter_last_updated
+	</sql>
+	<insert id="" >
+        insert into `reception_letter` (official_letter_id,reception_organ_id,reception_letter_id,reception_organ_user_name,reception_organ_user_tel,reception_organ_user_organ,reception_level,boolean_secret,audit_status,date_created,last_updated,)
+        <foreach collection="carBasePOList" item="item" separator=",">
+			(
+						#{item.officialLetterId,jdbcType=VARCHAR},
+						#{item.receptionOrganId,jdbcType=VARCHAR},
+						UUID(),
+						#{item.receptionOrganUserName,jdbcType=VARCHAR},
+						#{item.receptionOrganUserTel,jdbcType=VARCHAR},
+						#{item.receptionOrganUserOrgan,jdbcType=VARCHAR},
+						#{item.receptionLevel,jdbcType=VARCHAR},
+						#{item.receptionType,jdbcType=VARCHAR},
+						#{item.booleanSecret,jdbcType=VARCHAR},
+						#{item.auditStatus,jdbcType=VARCHAR},
+						CURRENT_TIMESTAMP,
+						CURRENT_TIMESTAMP,
+			)
+		</foreach>
+	</insert>
+ 	<insert id="create">
+        insert into `reception_letter`
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="receptionLetterPO.officialLetterId != null">official_letter_id,</if>
+			<if test="receptionLetterPO.receptionOrganId != null">reception_organ_id,</if>
+			reception_letter_id,
+			<if test="receptionLetterPO.receptionOrganUserName != null">reception_organ_user_name,</if>
+			<if test="receptionLetterPO.receptionOrganUserTel != null">reception_organ_user_tel,</if>
+			<if test="receptionLetterPO.receptionOrganUserOrgan != null">reception_organ_user_organ,</if>
+			<if test="receptionLetterPO.receptionType != null">reception_type,</if>
+			<if test="receptionLetterPO.receptionLevel != null">reception_level,</if>
+			<if test="receptionLetterPO.booleanSecret != null">boolean_secret,</if>
+			<if test="receptionLetterPO.auditStatus != null">audit_status,</if>
+			date_created,
+			last_updated,
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="receptionLetterPO.officialLetterId!= null">#{receptionLetterPO.officialLetterId,jdbcType=VARCHAR},</if>
+			<if test="receptionLetterPO.receptionOrganId!= null">#{receptionLetterPO.receptionOrganId,jdbcType=VARCHAR},</if>
+			UUID(),
+			<if test="receptionLetterPO.receptionOrganUserName != null">#{receptionLetterPO.receptionOrganUserName,jdbcType=VARCHAR},</if>
+			<if test="receptionLetterPO.receptionOrganUserTel!= null">#{receptionLetterPO.receptionOrganUserTel,jdbcType=VARCHAR},</if>
+			<if test="receptionLetterPO.receptionOrganUserOrgan!= null">#{receptionLetterPO.receptionOrganUserOrgan,jdbcType=VARCHAR},</if>
+			<if test="receptionLetterPO.receptionType!= null">#{receptionLetterPO.receptionType,jdbcType=VARCHAR},</if>
+			<if test="receptionLetterPO.receptionLevel!= null">#{receptionLetterPO.receptionLevel,jdbcType=VARCHAR},</if>
+			<if test="receptionLetterPO.booleanSecret!= null">#{receptionLetterPO.booleanSecret,jdbcType=VARCHAR},</if>
+			<if test="receptionLetterPO.auditStatus!= null">#{receptionLetterPO.auditStatus,jdbcType=VARCHAR},</if>
+			CURRENT_TIMESTAMP,
+			CURRENT_TIMESTAMP,
+		</trim>
+	</insert>
+
+	<update id="update">
+		update `reception_letter`
+		<set>
+            <if test="receptionLetterPO.officialLetterId!= null">official_letter_id=#{receptionLetterPO.officialLetterId,jdbcType=VARCHAR},</if>
+            <if test="receptionLetterPO.receptionOrganId!= null">reception_organ_id=#{receptionLetterPO.receptionOrganId,jdbcType=VARCHAR},</if>
+            <if test="receptionLetterPO.receptionLetterId!= null">reception_letter_id=#{receptionLetterPO.receptionLetterId,jdbcType=VARCHAR},</if>
+			<if test="receptionLetterPO.receptionType != null">reception_type=#{receptionLetterPO.receptionType,jdbcType=VARCHAR},</if>
+            <if test="receptionLetterPO.receptionOrganUserOrgan!= null">reception_organ_user_organ=#{receptionLetterPO.receptionOrganUserOrgan,jdbcType=VARCHAR},</if>
+			<if test="receptionLetterPO.receptionOrganUserName!= null">reception_organ_user_name=#{receptionLetterPO.receptionOrganUserName,jdbcType=VARCHAR},</if>
+			<if test="receptionLetterPO.receptionOrganUserTel!= null">reception_organ_user_tel=#{receptionLetterPO.receptionOrganUserTel,jdbcType=VARCHAR},</if>
+			<if test="receptionLetterPO.receptionLevel!= null">reception_level=#{receptionLetterPO.receptionLevel,jdbcType=VARCHAR},</if>
+            <if test="receptionLetterPO.booleanSecret!= null">boolean_secret=#{receptionLetterPO.booleanSecret,jdbcType=VARCHAR},</if>
+            <if test="receptionLetterPO.auditStatus!= null">audit_status=#{receptionLetterPO.auditStatus,jdbcType=VARCHAR},</if>
+			last_updated=CURRENT_TIMESTAMP,
+		</set>
+		where official_letter_id = #{receptionLetterPO.officialLetterId,jdbcType=VARCHAR}
+	</update>
+    <update id="update4Null" parameterType="com.zkml.official_reception.server.po.ReceptionLetterPO">
+        update `reception_letter`
+        <set>
+			official_letter_id=#{officialLetterId,jdbcType=VARCHAR},
+			reception_organ_id=#{receptionOrganId,jdbcType=VARCHAR},
+			reception_letter_id=#{receptionLetterId,jdbcType=VARCHAR},
+			reception_type=#{receptionType,jdbcType=VARCHAR},
+			reception_organ_user_name=#{receptionOrganUserName,jdbcType=VARCHAR},
+			reception_organ_user_tel=#{receptionOrganUserTel,jdbcType=VARCHAR},
+			reception_organ_user_organ=#{receptionOrganUserOrgan,jdbcType=VARCHAR},
+			reception_level=#{receptionLevel,jdbcType=VARCHAR},
+			boolean_secret=#{booleanSecret,jdbcType=VARCHAR},
+			audit_status=#{auditStatus,jdbcType=VARCHAR},
+			last_updated=CURRENT_TIMESTAMP,
+        </set>
+		where official_letter_id = #{officialLetterId,jdbcType=VARCHAR}
+    </update>
+
+	<delete id="delete" >
+		delete from  `reception_letter` where official_letter_id = #{officialLetterId,jdbcType=VARCHAR}
+	</delete>
+
+	<select id="findByOfficialLetterId" resultMap="LetterResultMap">
+		select
+        <include refid="selectLetterColumnAlias" />
+		from   `reception_letter` letter  where official_letter_id = #{officialLetterId,jdbcType=VARCHAR}
+	</select>
+
+</mapper>

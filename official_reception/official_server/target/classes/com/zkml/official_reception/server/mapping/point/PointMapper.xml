@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zkml.official_reception.server.dao.PointDAO">
+ 	<resultMap id="PointResultMap" type="com.zkml.official_reception.server.po.PointPO">
+		<result column="point_inspection_point_info_id" property="inspectionPointInfoId" jdbcType="VARCHAR" />
+		<result column="point_inspection_point_name" property="inspectionPointName" jdbcType="VARCHAR" />
+		<result column="point_area_id" property="areaId" jdbcType="VARCHAR" />
+		<result column="point_detailed_address" property="detailedAddress" jdbcType="VARCHAR" />
+		<result column="point_attach_img" property="attachImg" jdbcType="VARCHAR" />
+		<result column="point_brief_introduction" property="briefIntroduction" jdbcType="VARCHAR" />
+		<result column="point_site_img_x" property="site_img_x" jdbcType="VARCHAR" />
+		<result column="point_site_img_y" property="site_img_y" jdbcType="VARCHAR" />
+		<result column="point_vr_img" property="vrImg" jdbcType="VARCHAR" />
+		<result column="point_date_created" property="dateCreated" jdbcType="VARCHAR" />
+		<result column="point_last_updated" property="lastUpdated" jdbcType="VARCHAR" />
+		<result column="point_logic_delete" property="logicDelete" jdbcType="CHAR" />
+	</resultMap>
+	<sql id="selectPointColumnAlias">
+		point.inspection_point_info_id as point_inspection_point_info_id,
+		point.inspection_point_name as point_inspection_point_name,
+		point.area_id as point_area_id,
+		point.detailed_address as point_detailed_address,
+		point.attach_img as point_attach_img,
+		point.brief_introduction as point_brief_introduction,
+		point.site_img_x as point_site_img_x,
+		point.site_img_y as point_site_img_y,
+		point.vr_img as point_vr_img,
+		point.date_created as point_date_created,
+		point.last_updated as point_last_updated,
+		point.logic_delete as point_logic_delete
+	</sql>
+	<insert id="" >
+        insert into `inspection_point` (inspection_point_info_id,inspection_point_name,area_id,detailed_address,attach_img,brief_introduction,site_img,vr_img,date_created,last_updated,logic_delete,)
+        <foreach collection="carBasePOList" item="item" separator=",">
+			(
+						#{item.inspectionPointInfoId,jdbcType=VARCHAR},
+						#{item.inspectionPointName,jdbcType=VARCHAR},
+						#{item.areaId,jdbcType=VARCHAR},
+						#{item.detailedAddress,jdbcType=VARCHAR},
+						#{item.attachImg,jdbcType=VARCHAR},
+						#{item.briefIntroduction,jdbcType=VARCHAR},
+						#{item.siteImg,jdbcType=VARCHAR},
+						#{item.vrImg,jdbcType=VARCHAR},
+						CURRENT_TIMESTAMP,
+						CURRENT_TIMESTAMP,
+						#{item.logicDelete,jdbcType=CHAR},
+			)
+		</foreach>
+	</insert>
+ 	<insert id="create" parameterType="com.zkml.official_reception.server.po.PointPO">
+        insert into `inspection_point`
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="inspectionPointInfoId != null">inspection_point_info_id,</if>
+			<if test="inspectionPointName != null">inspection_point_name,</if>
+			<if test="areaId != null">area_id,</if>
+			<if test="detailedAddress != null">detailed_address,</if>
+			<if test="attachImg != null">attach_img,</if>
+			<if test="briefIntroduction != null">brief_introduction,</if>
+			<if test="siteImg != null">site_img,</if>
+			<if test="vrImg != null">vr_img,</if>
+			date_created,
+			last_updated,
+			<if test="logicDelete != null">logic_delete,</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="inspectionPointInfoId!= null">#{inspectionPointInfoId,jdbcType=VARCHAR},</if>
+			<if test="inspectionPointName!= null">#{inspectionPointName,jdbcType=VARCHAR},</if>
+			<if test="areaId!= null">#{areaId,jdbcType=VARCHAR},</if>
+			<if test="detailedAddress!= null">#{detailedAddress,jdbcType=VARCHAR},</if>
+			<if test="attachImg!= null">#{attachImg,jdbcType=VARCHAR},</if>
+			<if test="briefIntroduction!= null">#{briefIntroduction,jdbcType=VARCHAR},</if>
+			<if test="siteImg!= null">#{siteImg,jdbcType=VARCHAR},</if>
+			<if test="vrImg!= null">#{vrImg,jdbcType=VARCHAR},</if>
+			CURRENT_TIMESTAMP,
+			CURRENT_TIMESTAMP,
+			<if test="logicDelete!= null">#{logicDelete,jdbcType=CHAR},</if>
+		</trim>
+	</insert>
+
+	<update id="update" parameterType="com.zkml.official_reception.server.po.PointPO">
+		update `inspection_point`
+		<set>
+            <if test="inspectionPointInfoId!= null">inspection_point_info_id=#{inspectionPointInfoId,jdbcType=VARCHAR},</if>
+            <if test="inspectionPointName!= null">inspection_point_name=#{inspectionPointName,jdbcType=VARCHAR},</if>
+            <if test="areaId!= null">area_id=#{areaId,jdbcType=VARCHAR},</if>
+            <if test="detailedAddress!= null">detailed_address=#{detailedAddress,jdbcType=VARCHAR},</if>
+            <if test="attachImg!= null">attach_img=#{attachImg,jdbcType=VARCHAR},</if>
+            <if test="briefIntroduction!= null">brief_introduction=#{briefIntroduction,jdbcType=VARCHAR},</if>
+            <if test="siteImg!= null">site_img=#{siteImg,jdbcType=VARCHAR},</if>
+            <if test="vrImg!= null">vr_img=#{vrImg,jdbcType=VARCHAR},</if>
+			last_updated=CURRENT_TIMESTAMP,
+            <if test="logicDelete!= null">logic_delete=#{logicDelete,jdbcType=CHAR},</if>
+		</set>
+		where inspection_point_info_id = #{inspectionPointInfoId,jdbcType=CHAR}
+	</update>
+    <update id="update4Null" parameterType="com.zkml.official_reception.server.po.PointPO">
+        update `inspection_point`
+        <set>
+			inspection_point_info_id=#{inspectionPointInfoId,jdbcType=VARCHAR},
+			inspection_point_name=#{inspectionPointName,jdbcType=VARCHAR},
+			area_id=#{areaId,jdbcType=VARCHAR},
+			detailed_address=#{detailedAddress,jdbcType=VARCHAR},
+			attach_img=#{attachImg,jdbcType=VARCHAR},
+			brief_introduction=#{briefIntroduction,jdbcType=VARCHAR},
+			site_img=#{siteImg,jdbcType=VARCHAR},
+			vr_img=#{vrImg,jdbcType=VARCHAR},
+			last_updated=CURRENT_TIMESTAMP,
+			logic_delete=#{logicDelete,jdbcType=CHAR},
+        </set>
+        where inspection_point_info_id =#{inspectionPointInfoId,jdbcType=CHAR}
+    </update>
+
+	<update id="delete" >
+		<bind name="logicDelete" value="@com.zkml.common.obj.enums.BooleanEnum@YES" />
+		update  `inspection_point` set logic_delete=#{logicDelete} where inspection_point_info_id = #{inspectionPointInfoId,jdbcType=CHAR}
+	</update>
+
+	<select id="findByInspectionPointInfoId" resultMap="PointResultMap">
+		<bind name="logicDelete" value="@com.zkml.common.obj.enums.BooleanEnum@NO" />
+		select
+        <include refid="selectPointColumnAlias" />
+		from   `inspection_point` point where inspection_point_info_id = #{inspectionPointInfoId,jdbcType=CHAR} and logic_delete=#{logicDelete}
+	</select>
+
+	<select id="pointCountByAreaId" resultType="int">
+		SELECT COUNT(*) FROM inspection_point point WHERE area_id
+		in
+		(
+			SELECT area.area_id FROM sys_area area WHERE parent_id = #{areaId,jdbcType=VARCHAR}
+		)
+	</select>
+
+	<select id="findTotalByAreaId" resultType="Map">
+		SELECT count(1) total,tab.area_name  areaName FROM
+		(SELECT point.area_id,area.area_name FROM inspection_point point ,sys_area area  WHERE point.area_id=area.area_id and area.parent_id= #{areaId,jdbcType=VARCHAR}) tab
+		GROUP BY tab.area_id
+	</select>
+
+	<select id="findByAreaId" resultType="int">
+		SELECT count(*)
+		FROM inspection_point WHERE  area_id= #{areaId,jdbcType=VARCHAR}
+	</select>
+
+	<select id="findWithPage"  resultMap="PointResultMap">
+		SELECT
+		<include refid="selectPointColumnAlias" />
+		FROM inspection_point point
+		<where>
+			<if test="receptionQuery.name != null and receptionQuery.name != ''">
+				and  LOCATE(#{receptionQuery.name},point.inspection_point_name) > 0
+			</if>
+			<if test="receptionQuery.areaId != null and receptionQuery.areaId != ''">
+				and  point.area_id=#{receptionQuery.areaId}
+			</if>
+		</where>
+		order by point.date_created desc
+		limit #{offset},#{max}
+	</select>
+
+	<select id="findWithOutPage"  resultMap="PointResultMap">
+		SELECT
+		<include refid="selectPointColumnAlias" />
+		FROM inspection_point point
+		<where>
+			point.area_id=#{areaId}
+		</where>
+	</select>
+
+	<select id="findCountWithPage" resultType="int">
+		SELECT count(*)
+		FROM inspection_point
+		<where>
+			<if test="receptionQuery.name != null and receptionQuery.name != ''">
+				and  LOCATE(#{receptionQuery.name},inspection_point_name) > 0
+			</if>
+			<if test="receptionQuery.areaId != null and receptionQuery.areaId != ''">
+				and  area_id=#{receptionQuery.areaId}
+			</if>
+		</where>
+	</select>
+</mapper>
